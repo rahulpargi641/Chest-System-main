@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004f2ffac7d2cae43ae91f95d2fe3e24, type: 3}
+  m_Name: RareChest
+  m_EditorClassIdentifier: 
+  rarity: 1
+  chestClosedImage: {fileID: 21300000, guid: 411b6f4481886834cbbdf42d52dbcad3, type: 3}
+  chestOpenImage: {fileID: 21300000, guid: 53fcf2f11a19a0c44917220e2adb899b, type: 3}
+  coinsMin: 300
+  coinsMax: 500
+  gemsMin: 20
+  gemsMax: 40
+  unlockDurationMinutes: 30
