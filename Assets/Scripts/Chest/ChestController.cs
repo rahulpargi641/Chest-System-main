@@ -9,7 +9,7 @@ public class ChestController
     public ChestController(ChestModel chestModel, ChestView chestView)
     {
         ChestModel = chestModel;
-        ChestView = chestView;
+        this.ChestView = GameObject.Instantiate<ChestView>(chestView);
 
         ChestModel.SetController(this);
         ChestView.SetController(this);

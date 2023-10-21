@@ -9,25 +9,23 @@ public class ChestService : MonoSingletonGeneric<ChestService>
 
     [SerializeField] private List<ChestRarity> chestList;
     [SerializeField] private ChestView chestPrefab;
-    [SerializeField] private Button createChestButton;
-    [SerializeField] private Canvas parentcanvas;
+    [SerializeField] private Transform chestParentTransform;
 
     private ChestModel chestModel;
     private ChestView chestView;
 
+    public Transform ChestParentTransform { get { return chestParentTransform; } private set { } }
+
     private void Start()
     {
         chestList.Sort((p1, p2) => p1.GetProbability().CompareTo(p2.GetProbability()));
-        Debug.Log(chestList[0]);
-
-        createChestButton.onClick.AddListener(CreateRandomChest);
     }
-
-    private void CreateRandomChest()
+    public void CreateRandomChest()
     {
         ChestSlot slot = SlotService.Instance.GetVacantSlot();
         if (slot == null)
         {
+            UIService.Instance.EnableSlotsFullPopUp();
             return;
         }
 
@@ -43,12 +41,10 @@ public class ChestService : MonoSingletonGeneric<ChestService>
         }
 
         chestModel = new ChestModel(chestObject);
-        chestView = GameObject.Instantiate<ChestView>(chestPrefab);
-        chestView.transform.SetParent(parentcanvas.transform);
+        ChestController = new ChestController(chestModel, chestPrefab);
+        chestView = ChestController.ChestView;
         chestView.SetSlot(slot);
-        ChestController = new ChestController(chestModel, chestView);
     }
-
 
 }
 [System.Serializable]
