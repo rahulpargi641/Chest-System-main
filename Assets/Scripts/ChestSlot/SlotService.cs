@@ -1,21 +1,33 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ChestSystem
+public class SlotService : MonoSingletonGeneric<SlotService>
 {
-    public class SlotService : MonoSingletonGeneric<SlotService>
-    {
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
+    [SerializeField] private List<ChestSlot> slotList;
 
-        // Update is called once per frame
-        void Update()
+    public ChestSlot GetVacantSlot()
+    {
+        ChestSlot slot = null;
+        foreach (var i in slotList)
         {
-        
+            if (i.IsSlotEmpty())
+            {
+                slot = i;
+                slot.SetIsEmpty(false);
+                break;
+            }
         }
+        return slot;
     }
+}
+
+[System.Serializable]
+public class ChestSlot
+{
+    [SerializeField] private RectTransform slotRectTransform;
+    private bool isEmpty = true;
+
+    public bool IsSlotEmpty() => isEmpty;
+    public void SetIsEmpty(bool value) => isEmpty = value;
+    public RectTransform GetRectTransform() => slotRectTransform;
 }
