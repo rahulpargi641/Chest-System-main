@@ -12,6 +12,7 @@ namespace ChestSystem
         [SerializeField] private List<ChestRarity> chestList;
         [SerializeField] private ChestView chestPrefab;
         [SerializeField] private Button createChestButton;
+        [SerializeField] private Canvas parentcanvas;
 
         private ChestModel chestModel;
         private ChestView chestView;
@@ -26,6 +27,12 @@ namespace ChestSystem
 
         private void CreateRandomChest()
         {
+            ChestSlot slot = SlotService.Instance.GetVacantSlot();
+            if (slot == null)
+            {
+                return;
+            }
+
             int randomNumber = Random.Range(1, 101);
             ChestScriptableObject chestObject = null;
 
@@ -39,6 +46,8 @@ namespace ChestSystem
 
             chestModel = new ChestModel(chestObject);
             chestView = GameObject.Instantiate<ChestView>(chestPrefab);
+            chestView.transform.SetParent(parentcanvas.transform);
+            chestView.SetSlot(slot);
             ChestController = new ChestController(chestModel, chestView);
         }
 
