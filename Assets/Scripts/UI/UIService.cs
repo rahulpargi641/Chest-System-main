@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIService : MonoSingletonGeneric<UIService>
-{
     public class UIService : MonoSingletonGeneric<UIService>
     {
         public RectTransform UnlockNowRectTransform { get { return unlockNowRectTransform; } private set { } }
@@ -56,4 +54,3 @@ public class UIService : MonoSingletonGeneric<UIService>
             setTimerButton.gameObject.SetActive(false);
         }
     }
-}
