@@ -13,6 +13,7 @@ public class ChestController
     private ChestUnlockedState chestUnlocked;
 
     public float TimeSecondsPerGem { get { return 600f; } private set { } } //10 minutes
+    public ChestState ChestState { get { return currentState.GetChestState(); } private set { } }
 
     public ChestController(ChestModel chestModel, ChestView chestPrefab)
     {

@@ -9,6 +9,7 @@ public class ChestView : MonoBehaviour
     public Button ChestButton { get { return chestButton; } private set { } }
     public TextMeshProUGUI TopText { get { return topText; } private set { } }
     public TextMeshProUGUI BottomText { get { return bottomText; } private set { } }
+    public Image ChestImage { get { return chestImage; } private set { } }
 
     [SerializeField] private RectTransform chestRectTransform;
     [SerializeField] private Image chestImage;
@@ -36,6 +37,7 @@ public class ChestView : MonoBehaviour
     public void DestroyChest()
     {
         slot.SetIsEmpty(true);
+        ChestService.Instance.ChestControllerList.Remove(this.chestController);
         Destroy(this.gameObject);
     }
 

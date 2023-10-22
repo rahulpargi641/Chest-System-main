@@ -8,11 +8,15 @@ using UnityEngine.UI;
 public class UIService : MonoSingletonGeneric<UIService>
 {
     public RectTransform UnlockNowRectTransform { get { return unlockNowRectTransform; } private set { } }
+
+    public Vector2 UnlockButtonInitialPos { get; private set; }
     public Button UnlockNowButton { get { return unlockNowButton; } private set { } }
     public Button SetTimerButton { get { return setTimerButton; } private set { } }
     public TextMeshProUGUI GiftMessage { get { return giftMessage; } private set { } }
     public TextMeshProUGUI GiftCoinText { get { return giftCoinText; } private set { } }
     public TextMeshProUGUI GiftGemText { get { return giftGemText; } private set { } }
+
+    public TextMeshProUGUI UnlockText { get { return unlockText; } private set { } }
 
     [Header("Chest Related Buttons")]
     [SerializeField] private Button createChestButton;
@@ -25,6 +29,7 @@ public class UIService : MonoSingletonGeneric<UIService>
     [SerializeField] private Button closeChestPopUp;
     [SerializeField] private Button unlockNowButton;
     [SerializeField] private RectTransform unlockNowRectTransform;
+    [SerializeField] private TextMeshProUGUI unlockText;
     [SerializeField] private Button setTimerButton;
     [SerializeField] private TextMeshProUGUI giftMessage;
     [SerializeField] private TextMeshProUGUI giftCoinText;
@@ -42,7 +47,10 @@ public class UIService : MonoSingletonGeneric<UIService>
         rayCastBlocker.SetActive(false);
         chestSlotsFullPopUp.SetActive(false);
         chestPopUp.SetActive(false);
-
+        unlockNowButton.gameObject.SetActive(false);
+        setTimerButton.gameObject.SetActive(false);
+        giftMessage.gameObject.SetActive(false);
+        UnlockButtonInitialPos = unlockNowRectTransform.anchoredPosition;
 
         createChestButton.onClick.AddListener(ChestService.Instance.CreateRandomChest);
         closeChestSlotsFull.onClick.AddListener(DisableSlotsFullPopUp);
@@ -71,7 +79,13 @@ public class UIService : MonoSingletonGeneric<UIService>
     {
         rayCastBlocker.SetActive(false);
         chestPopUp.SetActive(false);
+        unlockNowButton.gameObject.SetActive(false);
+        setTimerButton.gameObject.SetActive(false);
+        giftMessage.gameObject.SetActive(false);
+
         OnChestPopUpClosed?.Invoke();
+        unlockNowButton.onClick.RemoveAllListeners();
+        setTimerButton.onClick.RemoveAllListeners();
     }
 
     public void RefreshPlayerStats()

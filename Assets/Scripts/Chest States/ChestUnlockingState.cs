@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,38 +14,38 @@ public class ChestUnlockingState : IChestState
 
     private Button unlockNowButton;
     private RectTransform unlockButtonRectTransform;
+    private TextMeshProUGUI unlockText;
     private Vector2 centerOfChestPopUp = new Vector2(0, 0);
-    private Vector2 unlockButtonInitialPos;
+
+    private CancellationTokenSource cancellationTokenSource;
 
     public ChestUnlockingState(ChestController chestController)
     {
         this.chestController = chestController;
         unlockNowButton = UIService.Instance.UnlockNowButton;
         unlockButtonRectTransform = UIService.Instance.UnlockNowRectTransform;
-        unlockButtonInitialPos = unlockButtonRectTransform.anchoredPosition;
-
-        unlockNowButton.onClick.AddListener(chestController.UnlockNow);
+        unlockText = UIService.Instance.UnlockText;
     }
     public void OnStateEnable()
     {
         chestController.ChestView.TopText.text = "Unlocking";
         timeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
-
-        //bring the Unlock button to centre of the popup
-        unlockButtonRectTransform.anchoredPosition = centerOfChestPopUp;
-        unlockNowButton.gameObject.SetActive(true);
-
         CountDown();
     }
     public void ChestButtonAction()
     {
+        //bring the Unlock button to centre of the popup
+        unlockButtonRectTransform.anchoredPosition = centerOfChestPopUp;
+        unlockNowButton.gameObject.SetActive(true);
+        unlockText.text = "Unlock Now: " + GetRequiredGemsToUnlock().ToString();
+        unlockNowButton.onClick.AddListener(chestController.UnlockNow);
         UIService.Instance.EnableChestPopUp();
     }
     public void OnStateDisable()
     {
-        unlockButtonRectTransform.anchoredPosition = unlockButtonInitialPos;
-        unlockNowButton.gameObject.SetActive(false);
         UIService.Instance.DisableChestPopUp();
+
+        cancellationTokenSource?.Cancel();
     }
     public ChestState GetChestState()
     {
@@ -49,6 +53,8 @@ public class ChestUnlockingState : IChestState
     }
     private async void CountDown()
     {
+        cancellationTokenSource = new CancellationTokenSource();
+
         while (timeRemainingSeconds >= 0)
         {
             TimeSpan timeSpan = TimeSpan.FromSeconds(timeRemainingSeconds);
@@ -56,8 +62,16 @@ public class ChestUnlockingState : IChestState
             chestController.ChestView.BottomText.text = timeString;
 
             timeRemainingSeconds--;
-
-            await Task.Delay(1000);
+            try
+            {
+                await Task.Delay(1000, cancellationTokenSource.Token);
+            }
+            catch
+            {
+                cancellationTokenSource?.Dispose();
+                cancellationTokenSource = null;
+                return;
+            }
         }
         chestController.UnlockNow();
     }
