@@ -33,6 +33,11 @@ public class ChestView : MonoBehaviour
     {
         chestImage.sprite = chestController.ChestModel.ChestClosedImage;
     }
+    public void DestroyChest()
+    {
+        slot.SetIsEmpty(true);
+        Destroy(this.gameObject);
+    }
 
     private void Awake()
     {
@@ -42,5 +47,7 @@ public class ChestView : MonoBehaviour
     private void Start()
     {
         ChangeChestImage();
+
+        chestButton.onClick.AddListener(chestController.ChestButtonAction);
     }
 }

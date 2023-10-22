@@ -12,6 +12,8 @@ public class ChestController
     private ChestUnlockingState chestUnlocking;
     private ChestUnlockedState chestUnlocked;
 
+    public float TimeSecondsPerGem { get { return 600f; } private set { } } //10 minutes
+
     public ChestController(ChestModel chestModel, ChestView chestPrefab)
     {
         this.ChestModel = chestModel;
@@ -23,28 +25,26 @@ public class ChestController
         chestLocked = new ChestLockedState(this);
         chestUnlocking = new ChestUnlockingState(this);
         chestUnlocked = new ChestUnlockedState(this);
-        currentState = chestLocked;
-    }
 
-    private void ChangeState()
+        currentState = chestLocked;
+        currentState.OnStateEnable();
+    }
+    public void ChestButtonAction()
     {
-        switch (currentState.GetChestState())
-        {
-            case ChestState.LOCKED:
-                currentState = chestUnlocking;
-                break;
-            case ChestState.UNLOCKING:
-                currentState = chestUnlocked;
-                break;
-        }
+        currentState.ChestButtonAction();
     }
     public void UnlockNow()
     {
-        //reduce number of gems from account;
+        PlayerService.Instance.DecrementGems(currentState.GetRequiredGemsToUnlock());
+
+        currentState.OnStateDisable();
         currentState = chestUnlocked;
+        currentState.OnStateEnable();
     }
     public void StartUnlocking()
     {
-
+        currentState.OnStateDisable();
+        currentState = chestUnlocking;
+        currentState.OnStateEnable();
     }
 }

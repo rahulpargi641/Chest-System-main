@@ -11,4 +11,6 @@ public interface IChestState
     public void OnStateDisable();
 
     public ChestState GetChestState();
+
+    public int GetRequiredGemsToUnlock();
 }
