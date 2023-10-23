@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,7 +22,6 @@ public class ChestView : MonoBehaviour
 
     private ChestController chestController;
     private ChestSlot slot;
-    private Coroutine countDown;
     public void SetController(ChestController controller)
     {
         this.chestController = controller;
@@ -33,15 +33,10 @@ public class ChestView : MonoBehaviour
         this.slot = slot;
         chestRectTransform.anchoredPosition = slot.GetRectTransform().anchoredPosition;
     }
-    public void ChangeChestImage()
-    {
-        chestImage.sprite = chestController.ChestModel.ChestClosedImage;
-    }
     public void DestroyChest()
     {
         slot.SetIsEmpty(true);
-        ChestService.Instance.ChestControllerList.Remove(this.chestController);
-        Destroy(this.gameObject);
+        chestController.RemoveView();
     }
 
     public IEnumerator CountDown()
@@ -58,18 +53,16 @@ public class ChestView : MonoBehaviour
         chestController.UnlockNow();
     }
 
+    public void InitialSettings()
+    {
+        chestImage.sprite = chestController.ChestModel.ChestClosedImage;
+        TimeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
+        chestButton.onClick.AddListener(chestController.ChestButtonAction);
+    }
+
     private void Awake()
     {
         transform.SetParent(ChestService.Instance.ChestParentTransform);
         chestRectTransform.localScale = new Vector3(1, 1, 1);
-    }
-
-    private void Start()
-    {
-        ChangeChestImage();
-
-        chestButton.onClick.AddListener(chestController.ChestButtonAction);
-
-        TimeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
     }
 }
