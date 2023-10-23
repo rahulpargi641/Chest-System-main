@@ -1,40 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 public class ChestService : MonoSingletonGeneric<ChestService>
 {
-    //public ChestController ChestController { get; private set; }
-
-    [SerializeField] private List<ChestRarity> chestList;
-
+    [SerializeField] private List<Chest> chests;
     [SerializeField] private Transform chestParentTransform;
-
     public Transform ChestParentTransform { get { return chestParentTransform; } private set { } }
 
     private void Start()
     {
-        chestList.Sort((p1, p2) => p1.GetProbability().CompareTo(p2.GetProbability()));
+        chests.Sort((p1, p2) => p1.GetFindingProbability().CompareTo(p2.GetFindingProbability()));
         CreateChestModels();
         CreateChestControllers();
     }
-    //Make one Chest Model for each scribtable Object.
+
     private void CreateChestModels()
     {
-        foreach (var i in chestList)
+        foreach (var chest in chests)
         {
-            ChestModel model = new ChestModel(i.GetChestObject());
-            i.SetModel(model);
+            ChestModel model = new ChestModel(chest.GetChestSO());
+            chest.SetModel(model);
         }
     }
 
-    //Make one Chest Controller for each slot
     private void CreateChestControllers()
     {
-        ChestScriptableObject chestObject = null;
-        int numberOfSlots = SlotService.Instance.GetNumberOfSlots();
+        int numberOfSlots = SlotService.Instance.GetSlotsCount();
         for (int i = 0; i < numberOfSlots; i++)
         {
             ChestController chestController = new ChestController();
@@ -50,50 +41,42 @@ public class ChestService : MonoSingletonGeneric<ChestService>
             return;
         }
 
-        int randomNumber = Random.Range(1, 101);
-        ChestRarity chestRarity = null;
-        int totalProbability = 100;
-        foreach (var i in chestList)
-        {
-            if (randomNumber >= (totalProbability - i.GetProbability()))
-            {
-                chestRarity = i;
-                break;
-            }
-            else
-            {
-                totalProbability -= i.GetProbability();
-            }
-        }
+        Chest chestToSpawn = GetChestAccordingToFindingProbablity();
+
         ChestController controller = slot.GetController();
-        controller.SetModel(chestRarity.GetModel());
+        controller.SetModel(chestToSpawn.GetModel());
         controller.SetChestView();
         controller.ChestView.SetSlot(slot);
     }
+
+    private Chest GetChestAccordingToFindingProbablity()
+    {
+        Chest chestToSpawn = null;
+
+        int randomNumber = Random.Range(1, 101);
+        int totalProbability = 100;
+
+        foreach (var chest in chests)
+        {
+            if (randomNumber >= (totalProbability - chest.GetFindingProbability()))
+                chestToSpawn = chest;
+            else
+                totalProbability -= chest.GetFindingProbability();
+        }
+
+        return chestToSpawn;
+    }
+
     public bool IsAnyChestUnlocking()
     {
-        int numberOfSlots = SlotService.Instance.GetNumberOfSlots();
-        for (int i = 0; i < numberOfSlots; i++)
+        int nSlots = SlotService.Instance.GetSlotsCount();
+
+        for (int i = 0; i < nSlots; i++)
         {
             ChestSlot slot = SlotService.Instance.GetSlotAtPos(i);
             if (slot.GetController().ChestState == ChestState.UNLOCKING)
-            {
                 return true;
-            }
         }
         return false;
     }
-
-}
-[System.Serializable]
-public class ChestRarity
-{
-    [SerializeField] private ChestScriptableObject chestObject;
-    [SerializeField] private int probabilityPercentage;
-
-    private ChestModel chestModel;
-    public void SetModel(ChestModel model) => chestModel = model;
-    public ChestModel GetModel() => chestModel;
-    public ChestScriptableObject GetChestObject() => chestObject;
-    public int GetProbability() => probabilityPercentage;
 }

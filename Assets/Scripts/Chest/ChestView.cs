@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,6 @@ public class ChestView : MonoBehaviour
     public TextMeshProUGUI TopText { get { return topText; } private set { } }
     public TextMeshProUGUI BottomText { get { return bottomText; } private set { } }
     public Image ChestImage { get { return chestImage; } private set { } }
-
     public int TimeRemainingSeconds { get; private set; }
 
     [SerializeField] private RectTransform chestRectTransform;
@@ -21,21 +19,30 @@ public class ChestView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bottomText;
 
     private ChestController chestController;
-    private ChestSlot slot;
-    public void SetController(ChestController controller)
+    private ChestSlot chestslot;
+
+    private void Awake()
     {
-        this.chestController = controller;
+        transform.SetParent(ChestService.Instance.ChestParentTransform);
+        chestRectTransform.localScale = new Vector3(1, 1, 1);
     }
 
-    //This method requires both chest and slot to be anchored about same anchor.
-    public void SetSlot(ChestSlot slot)
+    public void SetController(ChestController controller)
     {
-        this.slot = slot;
-        chestRectTransform.anchoredPosition = slot.GetRectTransform().anchoredPosition;
+        chestController = controller;
     }
+
+    // Sets both chest and slot to be anchored about same anchor.
+    public void SetSlot(ChestSlot chestSlot)
+    {
+        chestslot = chestSlot;
+        chestRectTransform.anchoredPosition = chestSlot.GetRectTransform().anchoredPosition;
+    }
+    
     public void DestroyChest()
     {
-        slot.SetIsEmpty(true);
+        chestslot.SetIsEmpty(true);
+        chestButton.onClick.RemoveAllListeners();
         chestController.RemoveView();
     }
 
@@ -58,11 +65,5 @@ public class ChestView : MonoBehaviour
         chestImage.sprite = chestController.ChestModel.ChestClosedImage;
         TimeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
         chestButton.onClick.AddListener(chestController.ChestButtonAction);
-    }
-
-    private void Awake()
-    {
-        transform.SetParent(ChestService.Instance.ChestParentTransform);
-        chestRectTransform.localScale = new Vector3(1, 1, 1);
     }
 }

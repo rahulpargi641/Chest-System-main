@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChestModel
 {
-    private ChestController chestController;
     public Sprite ChestClosedImage { get; private set; }
     public Sprite ChestOpenImage { get; private set; }
     public int CoinsMin { get; private set; }
@@ -15,18 +12,14 @@ public class ChestModel
 
     public ChestModel(ChestScriptableObject chestObject)
     {
-        this.ChestClosedImage = chestObject.chestClosedImage;
-        this.ChestOpenImage = chestObject.chestOpenImage;
+        ChestClosedImage = chestObject.chestClosedImage;
+        ChestOpenImage = chestObject.chestOpenImage;
 
-        this.CoinsMin = chestObject.coinsMin;
-        this.CoinsMax = chestObject.coinsMax;
-        this.GemsMin = chestObject.gemsMin;
-        this.GemsMax = chestObject.gemsMax;
+        CoinsMin = chestObject.coinsMin;
+        CoinsMax = chestObject.coinsMax;
+        GemsMin = chestObject.gemsMin;
+        GemsMax = chestObject.gemsMax;
 
-        this.UnlockDurationMinutes = chestObject.unlockDurationMinutes;
-    }
-    public void SetController(ChestController controller)
-    {
-        this.chestController = controller;
+        UnlockDurationMinutes = chestObject.unlockDurationMinutes;
     }
 }

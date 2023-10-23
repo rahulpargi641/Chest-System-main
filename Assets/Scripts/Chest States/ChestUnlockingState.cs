@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,13 +18,21 @@ public class ChestUnlockingState : IChestState
         unlockNowButton = UIService.Instance.UnlockNowButton;
         unlockButtonRectTransform = UIService.Instance.UnlockNowRectTransform;
         unlockText = UIService.Instance.UnlockText;
-
     }
+
     public void OnStateEnable()
     {
         chestController.ChestView.TopText.text = "Unlocking";
         countDown = chestController.ChestView.StartCoroutine(chestController.ChestView.CountDown());
     }
+
+    public void OnStateDisable()
+    {
+        UIService.Instance.DisableChestPopUp();
+
+        chestController.ChestView.StopCoroutine(countDown);
+    }
+
     public void ChestButtonAction()
     {
         //bring the Unlock button to centre of the popup
@@ -39,12 +42,7 @@ public class ChestUnlockingState : IChestState
         unlockNowButton.onClick.AddListener(chestController.UnlockNow);
         UIService.Instance.EnableChestPopUp();
     }
-    public void OnStateDisable()
-    {
-        UIService.Instance.DisableChestPopUp();
-
-        chestController.ChestView.StopCoroutine(countDown);
-    }
+ 
     public ChestState GetChestState()
     {
         return ChestState.UNLOCKING;

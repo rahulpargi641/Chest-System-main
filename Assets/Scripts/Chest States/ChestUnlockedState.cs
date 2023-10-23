@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,14 +15,38 @@ public class ChestUnlockedState : IChestState
         giftCoinText = UIService.Instance.GiftCoinText;
         giftGemText = UIService.Instance.GiftGemText;
     }
+
     public void OnStateEnable()
     {
         chestController.ChestView.TopText.text = "Unlocked";
         chestController.ChestView.BottomText.text = "OPEN";
         giftMessage.text = "Woooh!!!";
         chestController.ChestView.ChestImage.sprite = chestController.ChestModel.ChestOpenImage;
-
     }
+
+    public void OnStateDisable()
+    {
+        UIService.Instance.DisableChestPopUp();
+    }
+
+    public void ChestButtonAction()
+    {
+        UIService.OnChestPopUpClosed += DestroyChest;
+        giftMessage.gameObject.SetActive(true);
+        SetGifts();
+        UIService.Instance.EnableChestPopUp();
+    }
+
+    public ChestState GetChestState()
+    {
+        return ChestState.UNLOCKED;
+    }
+
+    public int GetRequiredGemsToUnlock()
+    {
+        return 0;
+    }
+
     private void SetGifts()
     {
         int coinsMin = chestController.ChestModel.CoinsMin;
@@ -41,29 +63,11 @@ public class ChestUnlockedState : IChestState
         PlayerService.Instance.IncrementCoins(giftCoins);
         PlayerService.Instance.IncrementGems(giftGems);
     }
-    public void ChestButtonAction()
-    {
-        UIService.OnChestPopUpClosed += DestroyChest;
-        giftMessage.gameObject.SetActive(true);
-        SetGifts();
-        UIService.Instance.EnableChestPopUp();
-    }
+
     private void DestroyChest()
     {
         UIService.OnChestPopUpClosed -= DestroyChest;
         OnStateDisable();
         chestController.ChestView.DestroyChest();
-    }
-    public void OnStateDisable()
-    {
-        UIService.Instance.DisableChestPopUp();
-    }
-    public ChestState GetChestState()
-    {
-        return ChestState.UNLOCKED;
-    }
-    public int GetRequiredGemsToUnlock()
-    {
-        return 0;
     }
 }

@@ -42,6 +42,38 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     public static event Action OnChestPopUpClosed;
 
+    public void RefreshPlayerStats()
+    {
+        coins.text = PlayerService.Instance.GetCoinsInAccount().ToString();
+        gems.text = PlayerService.Instance.GetGemsInAccount().ToString();
+    }
+    public void EnableChestPopUp()
+    {
+        rayCastBlocker.SetActive(true);
+        chestPopUp.SetActive(true);
+    }
+    public void DisableChestPopUp()
+    {
+        rayCastBlocker.SetActive(false);
+        chestPopUp.SetActive(false);
+        unlockNowButton.gameObject.SetActive(false);
+        setTimerButton.gameObject.SetActive(false);
+        giftMessage.gameObject.SetActive(false);
+
+        OnChestPopUpClosed?.Invoke();
+        unlockNowButton.onClick.RemoveAllListeners();
+        setTimerButton.onClick.RemoveAllListeners();
+    }
+    public void EnableSlotsFullPopUp()
+    {
+        rayCastBlocker.SetActive(true);
+        chestSlotsFullPopUp.SetActive(true);
+    }
+    private void DisableSlotsFullPopUp()
+    {
+        rayCastBlocker.SetActive(false);
+        chestSlotsFullPopUp.SetActive(false);
+    }
     private void Start()
     {
         rayCastBlocker.SetActive(false);
@@ -57,40 +89,5 @@ public class UIService : MonoSingletonGeneric<UIService>
         closeChestPopUp.onClick.AddListener(DisableChestPopUp);
 
         RefreshPlayerStats();
-    }
-    public void EnableSlotsFullPopUp()
-    {
-        rayCastBlocker.SetActive(true);
-        chestSlotsFullPopUp.SetActive(true);
-    }
-    private void DisableSlotsFullPopUp()
-    {
-        rayCastBlocker.SetActive(false);
-        chestSlotsFullPopUp.SetActive(false);
-    }
-
-    public void EnableChestPopUp()
-    {
-        rayCastBlocker.SetActive(true);
-        chestPopUp.SetActive(true);
-    }
-
-    public void DisableChestPopUp()
-    {
-        rayCastBlocker.SetActive(false);
-        chestPopUp.SetActive(false);
-        unlockNowButton.gameObject.SetActive(false);
-        setTimerButton.gameObject.SetActive(false);
-        giftMessage.gameObject.SetActive(false);
-
-        OnChestPopUpClosed?.Invoke();
-        unlockNowButton.onClick.RemoveAllListeners();
-        setTimerButton.onClick.RemoveAllListeners();
-    }
-
-    public void RefreshPlayerStats()
-    {
-        coins.text = PlayerService.Instance.GetCoinsInAccount().ToString();
-        gems.text = PlayerService.Instance.GetGemsInAccount().ToString();
     }
 }

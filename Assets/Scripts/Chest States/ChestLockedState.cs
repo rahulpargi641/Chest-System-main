@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 public class ChestLockedState : IChestState
 {
@@ -25,13 +22,30 @@ public class ChestLockedState : IChestState
         unlockButtonInitialPos = UIService.Instance.UnlockButtonInitialPos;
         unlockText = UIService.Instance.UnlockText;
     }
+
     public void OnStateEnable()
     {
         chestController.ChestView.TopText.text = "Locked";
         unlockDurationMinutes = chestController.ChestModel.UnlockDurationMinutes;
         chestController.ChestView.BottomText.text = (unlockDurationMinutes < 60) ?
-            unlockDurationMinutes.ToString() + " Min" : (unlockDurationMinutes / 60).ToString() + " Hr";
+        unlockDurationMinutes.ToString() + " Min" : (unlockDurationMinutes / 60).ToString() + " Hr";
     }
+
+    public void OnStateDisable()
+    {
+        UIService.Instance.DisableChestPopUp();
+    }
+
+    public ChestState GetChestState()
+    {
+        return ChestState.LOCKED;
+    }
+
+    public int GetRequiredGemsToUnlock()
+    {
+        return Mathf.CeilToInt(unlockDurationMinutes * 60 / chestController.TimeSecondsPerGem);
+    }
+
     public void ChestButtonAction()
     {
         unlockButtonRectTransform.anchoredPosition = unlockButtonInitialPos;
@@ -46,18 +60,5 @@ public class ChestLockedState : IChestState
         unlockNowButton.onClick.AddListener(chestController.UnlockNow);
         setTimerButton.onClick.AddListener(chestController.StartUnlocking);
         UIService.Instance.EnableChestPopUp();
-    }
-    public void OnStateDisable()
-    {
-        UIService.Instance.DisableChestPopUp();
-    }
-    public ChestState GetChestState()
-    {
-        return ChestState.LOCKED;
-    }
-
-    public int GetRequiredGemsToUnlock()
-    {
-        return Mathf.CeilToInt(unlockDurationMinutes * 60 / chestController.TimeSecondsPerGem);
     }
 }

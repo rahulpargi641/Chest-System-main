@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,27 +5,31 @@ public class ChestPoolService : MonoSingletonGeneric<ChestPoolService>
 {
     [SerializeField] private ChestView chestPrefab;
 
-    private Queue<ChestView> objectPool = new Queue<ChestView>();
+    private Queue<ChestView> chestPool = new Queue<ChestView>();
     private int numberOfSlots;
-
 
     private void Start()
     {
-        numberOfSlots = SlotService.Instance.GetNumberOfSlots();
+        CreateChestViews();
+    }
+
+    private void CreateChestViews()
+    {
+        numberOfSlots = SlotService.Instance.GetSlotsCount();
         for (int i = 0; i < numberOfSlots; i++)
         {
-            ChestView newView = GameObject.Instantiate<ChestView>(chestPrefab);
-            objectPool.Enqueue(newView);
-            newView.gameObject.SetActive(false);
+            ChestView spawnedChest = Instantiate(chestPrefab);
+            chestPool.Enqueue(spawnedChest);
+            spawnedChest.gameObject.SetActive(false);
         }
     }
 
     public ChestView GetFromPool(ChestController chestController)
     {
         ChestView item = null;
-        if (objectPool.Count > 0)
+        if (chestPool.Count > 0)
         {
-            item = objectPool.Dequeue();
+            item = chestPool.Dequeue();
             item.gameObject.SetActive(true);
             item.SetController(chestController);
             item.InitialSettings();
@@ -36,7 +39,7 @@ public class ChestPoolService : MonoSingletonGeneric<ChestPoolService>
 
     public void ReturnToPool(ChestView item)
     {
-        objectPool.Enqueue(item);
+        chestPool.Enqueue(item);
         item.gameObject.SetActive(false);
     }
 }

@@ -3,43 +3,31 @@ using UnityEngine;
 
 public class SlotService : MonoSingletonGeneric<SlotService>
 {
-    [SerializeField] private List<ChestSlot> slotList;
+    [SerializeField] private List<ChestSlot> slots;
 
     public ChestSlot GetSlotAtPos(int i)
     {
-        return slotList[i];
+        return slots[i];
     }
-    public int GetNumberOfSlots()
+
+    public int GetSlotsCount()
     {
-        return slotList.Count;
+        return slots.Count;
     }
+
     public ChestSlot GetVacantSlot()
     {
-        ChestSlot slot = null;
-        foreach (var i in slotList)
+        ChestSlot vacantSlot = null;
+        foreach (var slot in slots)
         {
-            if (i.IsSlotEmpty())
+            if (slot.IsSlotEmpty())
             {
-                slot = i;
-                slot.SetIsEmpty(false);
+                vacantSlot = slot;
+                vacantSlot.SetIsEmpty(false);
                 break;
             }
         }
-        return slot;
+        return vacantSlot;
     }
 }
 
-[System.Serializable]
-public class ChestSlot
-{
-    [SerializeField] private RectTransform slotRectTransform;
-
-    private ChestController chestController;
-    private bool isEmpty = true;
-
-    public void SetController(ChestController controller) => chestController = controller;
-    public ChestController GetController() => chestController;
-    public bool IsSlotEmpty() => isEmpty;
-    public void SetIsEmpty(bool value) => isEmpty = value;
-    public RectTransform GetRectTransform() => slotRectTransform;
-}

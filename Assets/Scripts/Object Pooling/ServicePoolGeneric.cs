@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,5 +41,4 @@ public class ServicePoolGeneric<T, U> : MonoSingletonGeneric<T>
         item.transform.rotation = newTransfrom.rotation;
         item.gameObject.SetActive(true);
     }
-
 }
