@@ -11,6 +11,8 @@ public class ChestView : MonoBehaviour
     public TextMeshProUGUI BottomText { get { return bottomText; } private set { } }
     public Image ChestImage { get { return chestImage; } private set { } }
 
+    public int TimeRemainingSeconds { get; private set; }
+
     [SerializeField] private RectTransform chestRectTransform;
     [SerializeField] private Image chestImage;
     [SerializeField] private Button chestButton;
@@ -19,6 +21,7 @@ public class ChestView : MonoBehaviour
 
     private ChestController chestController;
     private ChestSlot slot;
+    private Coroutine countDown;
     public void SetController(ChestController controller)
     {
         this.chestController = controller;
@@ -41,9 +44,24 @@ public class ChestView : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    public IEnumerator CountDown()
+    {
+        while (TimeRemainingSeconds >= 0)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds(TimeRemainingSeconds);
+            string timeString = timeSpan.ToString(@"hh\:mm\:ss");
+            BottomText.text = timeString;
+
+            TimeRemainingSeconds--;
+            yield return new WaitForSeconds(1);
+        }
+        chestController.UnlockNow();
+    }
+
     private void Awake()
     {
         transform.SetParent(ChestService.Instance.ChestParentTransform);
+        chestRectTransform.localScale = new Vector3(1, 1, 1);
     }
 
     private void Start()
@@ -51,5 +69,7 @@ public class ChestView : MonoBehaviour
         ChangeChestImage();
 
         chestButton.onClick.AddListener(chestController.ChestButtonAction);
+
+        TimeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
     }
 }

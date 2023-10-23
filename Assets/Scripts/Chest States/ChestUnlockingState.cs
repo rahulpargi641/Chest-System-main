@@ -10,14 +10,12 @@ using UnityEngine.UI;
 public class ChestUnlockingState : IChestState
 {
     private ChestController chestController;
-    private int timeRemainingSeconds;
 
     private Button unlockNowButton;
     private RectTransform unlockButtonRectTransform;
     private TextMeshProUGUI unlockText;
     private Vector2 centerOfChestPopUp = new Vector2(0, 0);
-
-    private CancellationTokenSource cancellationTokenSource;
+    private Coroutine countDown;
 
     public ChestUnlockingState(ChestController chestController)
     {
@@ -25,12 +23,12 @@ public class ChestUnlockingState : IChestState
         unlockNowButton = UIService.Instance.UnlockNowButton;
         unlockButtonRectTransform = UIService.Instance.UnlockNowRectTransform;
         unlockText = UIService.Instance.UnlockText;
+
     }
     public void OnStateEnable()
     {
         chestController.ChestView.TopText.text = "Unlocking";
-        timeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
-        CountDown();
+        countDown = chestController.ChestView.StartCoroutine(chestController.ChestView.CountDown());
     }
     public void ChestButtonAction()
     {
@@ -45,39 +43,15 @@ public class ChestUnlockingState : IChestState
     {
         UIService.Instance.DisableChestPopUp();
 
-        cancellationTokenSource?.Cancel();
+        chestController.ChestView.StopCoroutine(countDown);
     }
     public ChestState GetChestState()
     {
         return ChestState.UNLOCKING;
     }
-    private async void CountDown()
-    {
-        cancellationTokenSource = new CancellationTokenSource();
-
-        while (timeRemainingSeconds >= 0)
-        {
-            TimeSpan timeSpan = TimeSpan.FromSeconds(timeRemainingSeconds);
-            string timeString = timeSpan.ToString(@"hh\:mm\:ss");
-            chestController.ChestView.BottomText.text = timeString;
-
-            timeRemainingSeconds--;
-            try
-            {
-                await Task.Delay(1000, cancellationTokenSource.Token);
-            }
-            catch
-            {
-                cancellationTokenSource?.Dispose();
-                cancellationTokenSource = null;
-                return;
-            }
-        }
-        chestController.UnlockNow();
-    }
 
     public int GetRequiredGemsToUnlock()
     {
-        return Mathf.CeilToInt(timeRemainingSeconds / chestController.TimeSecondsPerGem);
+        return Mathf.CeilToInt(chestController.ChestView.TimeRemainingSeconds / chestController.TimeSecondsPerGem);
     }
 }

@@ -41,6 +41,7 @@ public class ChestService : MonoSingletonGeneric<ChestService>
             if (randomNumber >= (totalProbability - i.GetProbability()))
             {
                 chestObject = i.GetChestObject();
+                break;
             }
             else
             {
