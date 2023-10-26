@@ -15,18 +15,17 @@ public class UIService : MonoSingletonGeneric<UIService>
     public TextMeshProUGUI GiftMessage { get { return giftMessage; } private set { } }
     public TextMeshProUGUI GiftCoinText { get { return giftCoinText; } private set { } }
     public TextMeshProUGUI GiftGemText { get { return giftGemText; } private set { } }
-
     public TextMeshProUGUI UnlockText { get { return unlockText; } private set { } }
 
-    [Header("Chest Related Buttons")]
+    [Header("Chest Related")]
     [SerializeField] private Button createChestButton;
     [SerializeField] private GameObject rayCastBlocker;
     [SerializeField] private GameObject chestSlotsFullPopUp;
-    [SerializeField] private Button closeChestSlotsFull;
+    [SerializeField] private Button closeChestSlotsFullButton;
 
     [Header("Chest Pop Up")]
     [SerializeField] private GameObject chestPopUp;
-    [SerializeField] private Button closeChestPopUp;
+    [SerializeField] private Button closeChestPopUpButton;
     [SerializeField] private Button unlockNowButton;
     [SerializeField] private RectTransform unlockNowRectTransform;
     [SerializeField] private TextMeshProUGUI unlockText;
@@ -85,8 +84,8 @@ public class UIService : MonoSingletonGeneric<UIService>
         UnlockButtonInitialPos = unlockNowRectTransform.anchoredPosition;
 
         createChestButton.onClick.AddListener(ChestService.Instance.SpawnRandomChest);
-        closeChestSlotsFull.onClick.AddListener(DisableSlotsFullPopUp);
-        closeChestPopUp.onClick.AddListener(DisableChestPopUp);
+        closeChestSlotsFullButton.onClick.AddListener(DisableSlotsFullPopUp);
+        closeChestPopUpButton.onClick.AddListener(DisableChestPopUp);
 
         RefreshPlayerStats();
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class Chest
+public class ChestRarity
 {
     [SerializeField] private ChestScriptableObject chestSO;
     [SerializeField] private int chestFindingProbability;

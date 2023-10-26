@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4d2856fa18d3a4458d4ea638394deaf, type: 3}
-  m_Name: LegendaryChest
+  m_Name: SuperMagicalChest
   m_EditorClassIdentifier: 
-  chestClosedImage: {fileID: 0}
-  chestOpenImage: {fileID: 0}
-  coinsMin: 0
-  coinsMax: 0
-  gemsMin: 0
-  gemsMax: 0
-  unlockDurationMinutes: 0
+  chestClosedImage: {fileID: 21300000, guid: 8429ed4fcfb8c9b4e9a2523ae2789e00, type: 3}
+  chestOpenImage: {fileID: 21300000, guid: 1b0e1eff837943d48bef4da942a4b8d4, type: 3}
+  coinsMin: 80
+  coinsMax: 100
+  gemsMin: 80
+  gemsMax: 100
+  unlockDurationMinutes: 20

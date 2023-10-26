@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4d2856fa18d3a4458d4ea638394deaf, type: 3}
-  m_Name: RareChest
+  m_Name: GoldenChest
   m_EditorClassIdentifier: 
-  chestClosedImage: {fileID: 0}
-  chestOpenImage: {fileID: 0}
-  coinsMin: 0
-  coinsMax: 0
-  gemsMin: 0
-  gemsMax: 0
-  unlockDurationMinutes: 0
+  chestClosedImage: {fileID: 21300000, guid: a07776dc99c3a8d47bc2d1d1f43c7209, type: 3}
+  chestOpenImage: {fileID: 21300000, guid: c274ac0db172efc488ce3ab28f7ef702, type: 3}
+  coinsMin: 30
+  coinsMax: 60
+  gemsMin: 30
+  gemsMax: 60
+  unlockDurationMinutes: 15

@@ -429,11 +429,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 219560025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7850456c3cf99f94da755e18a445c35e, type: 3}
+  m_Script: {fileID: 11500000, guid: d41bd33f98b241540bcbea1cdff51fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gemsInAccount: 0
-  coinsInAccount: 0
 --- !u!1 &230426020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1949,16 +1947,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 785506204}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 002e82b8b75ecef48a81f6368e30853b, type: 3}
+  m_Script: {fileID: 11500000, guid: 621781c55e103d042a2d8938e0e59306, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <UnlockButtonInitialPos>k__BackingField: {x: 0, y: 0}
   createChestButton: {fileID: 1397946980}
   rayCastBlocker: {fileID: 1742409923}
   chestSlotsFullPopUp: {fileID: 2068737721}
-  closeChestSlotsFull: {fileID: 1015534074}
+  closeChestSlotsFullButton: {fileID: 1015534074}
   chestPopUp: {fileID: 1964312179}
-  closeChestPopUp: {fileID: 1277592068}
+  closeChestPopUpButton: {fileID: 1277592068}
   unlockNowButton: {fileID: 232745137}
   unlockNowRectTransform: {fileID: 232745136}
   unlockText: {fileID: 728804546}
@@ -2134,7 +2131,7 @@ GameObject:
   - component: {fileID: 1015534075}
   - component: {fileID: 1015534074}
   m_Layer: 5
-  m_Name: Button-Close
+  m_Name: Close Chest Slots Full Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4049,16 +4046,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestList:
-  - chestObject: {fileID: 11400000, guid: 3291294df1f6ddd43b4b3aae2d11b1af, type: 2}
-    probabilityPercentage: 50
-  - chestObject: {fileID: 11400000, guid: 1b214229965836e498aec4e401128c64, type: 2}
-    probabilityPercentage: 30
-  - chestObject: {fileID: 11400000, guid: 0169193a83b708242b165bb72a0e5ad2, type: 2}
-    probabilityPercentage: 15
-  - chestObject: {fileID: 11400000, guid: 666d582f9da8bb14cb20a6074f98bde9, type: 2}
-    probabilityPercentage: 5
-  chestPrefab: {fileID: 2102871894, guid: 4bec59f05179a9443906f61cb224ecf8, type: 3}
-  chestParentTransform: {fileID: 0}
+  - chestSO: {fileID: 11400000, guid: 3291294df1f6ddd43b4b3aae2d11b1af, type: 2}
+    chestFindingProbability: 60
+  - chestSO: {fileID: 11400000, guid: 1b214229965836e498aec4e401128c64, type: 2}
+    chestFindingProbability: 50
+  - chestSO: {fileID: 11400000, guid: 666d582f9da8bb14cb20a6074f98bde9, type: 2}
+    chestFindingProbability: 40
+  - chestSO: {fileID: 11400000, guid: 0169193a83b708242b165bb72a0e5ad2, type: 2}
+    chestFindingProbability: 30
+  chestParentTransform: {fileID: 607663608}
 --- !u!4 &1882969402
 Transform:
   m_ObjectHideFlags: 0
@@ -4092,7 +4088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1919314902
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4222,11 +4218,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1956240458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ccde736a943c4041a743cc91ed655b0, type: 3}
+  m_Script: {fileID: 11500000, guid: a929e1034c7258f46b7ac4712952373b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   chestPrefab: {fileID: 2102871894, guid: 4bec59f05179a9443906f61cb224ecf8, type: 3}
-  numberOfSlots: 0
 --- !u!4 &1956240460
 Transform:
   m_ObjectHideFlags: 0
@@ -4254,7 +4249,7 @@ GameObject:
   - component: {fileID: 1964312182}
   - component: {fileID: 1964312181}
   m_Layer: 5
-  m_Name: chestPopUp
+  m_Name: ChestPopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4427,7 +4422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229296aeef3ed674a8aca4d80751f3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotList:
+  slots:
   - slotRectTransform: {fileID: 2141373524}
   - slotRectTransform: {fileID: 182043830}
   - slotRectTransform: {fileID: 1039711043}

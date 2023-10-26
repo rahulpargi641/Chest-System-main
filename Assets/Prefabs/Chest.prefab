@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 4743583500915164258}
   - component: {fileID: 2102871894}
   m_Layer: 5
-  m_Name: ChestPrefab
+  m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -332,6 +332,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55532ae1327899444bb319fe07d308a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestRectTransform: {fileID: 4743583500915164256}
+  chestImage: {fileID: 8418568206449163927}
+  chestButton: {fileID: 5899080171831089505}
+  topText: {fileID: 5603376291488888351}
+  bottomText: {fileID: 2091465705}
 --- !u!1 &6422117940171139366
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +572,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.04150939, g: 1, b: 0.4487113, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}

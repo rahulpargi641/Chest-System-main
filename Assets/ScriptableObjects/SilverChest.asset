@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4d2856fa18d3a4458d4ea638394deaf, type: 3}
-  m_Name: CommonChest
+  m_Name: SilverChest
   m_EditorClassIdentifier: 
-  chestClosedImage: {fileID: 0}
-  chestOpenImage: {fileID: 0}
-  coinsMin: 0
-  coinsMax: 0
-  gemsMin: 0
-  gemsMax: 0
-  unlockDurationMinutes: 0
+  chestClosedImage: {fileID: 21300000, guid: 411b6f4481886834cbbdf42d52dbcad3, type: 3}
+  chestOpenImage: {fileID: 21300000, guid: 53fcf2f11a19a0c44917220e2adb899b, type: 3}
+  coinsMin: 20
+  coinsMax: 40
+  gemsMin: 20
+  gemsMax: 40
+  unlockDurationMinutes: 10
