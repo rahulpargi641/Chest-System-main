@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,18 +13,17 @@ public class UIService : MonoSingletonGeneric<UIService>
     public TextMeshProUGUI GiftMessage { get { return giftMessage; } private set { } }
     public TextMeshProUGUI GiftCoinText { get { return giftCoinText; } private set { } }
     public TextMeshProUGUI GiftGemText { get { return giftGemText; } private set { } }
-
     public TextMeshProUGUI UnlockText { get { return unlockText; } private set { } }
 
-    [Header("Chest Related Buttons")]
+    [Header("Chest Related")]
     [SerializeField] private Button createChestButton;
     [SerializeField] private GameObject rayCastBlocker;
     [SerializeField] private GameObject chestSlotsFullPopUp;
-    [SerializeField] private Button closeChestSlotsFull;
+    [SerializeField] private Button closeChestSlotsFullButton;
 
     [Header("Chest Pop Up")]
     [SerializeField] private GameObject chestPopUp;
-    [SerializeField] private Button closeChestPopUp;
+    [SerializeField] private Button closeChestPopUpButton;
     [SerializeField] private Button unlockNowButton;
     [SerializeField] private RectTransform unlockNowRectTransform;
     [SerializeField] private TextMeshProUGUI unlockText;
@@ -52,21 +49,19 @@ public class UIService : MonoSingletonGeneric<UIService>
         giftMessage.gameObject.SetActive(false);
         UnlockButtonInitialPos = unlockNowRectTransform.anchoredPosition;
 
-        createChestButton.onClick.AddListener(ChestService.Instance.CreateRandomChest);
-        closeChestSlotsFull.onClick.AddListener(DisableSlotsFullPopUp);
-        closeChestPopUp.onClick.AddListener(DisableChestPopUp);
+        createChestButton.onClick.AddListener(ChestService.Instance.SpawnRandomChest);
+        closeChestSlotsFullButton.onClick.AddListener(DisableSlotsFullPopUp);
+        closeChestPopUpButton.onClick.AddListener(DisableChestPopUp);
 
         RefreshPlayerStats();
+
+        AudioService.Instance.PlaySound(SoundType.BgMusic);
     }
-    public void EnableSlotsFullPopUp()
+
+    public void RefreshPlayerStats()
     {
-        rayCastBlocker.SetActive(true);
-        chestSlotsFullPopUp.SetActive(true);
-    }
-    private void DisableSlotsFullPopUp()
-    {
-        rayCastBlocker.SetActive(false);
-        chestSlotsFullPopUp.SetActive(false);
+        coins.text = PlayerService.Instance.GetCoinsInAccount().ToString();
+        gems.text = PlayerService.Instance.GetGemsInAccount().ToString();
     }
 
     public void EnableChestPopUp()
@@ -86,11 +81,21 @@ public class UIService : MonoSingletonGeneric<UIService>
         OnChestPopUpClosed?.Invoke();
         unlockNowButton.onClick.RemoveAllListeners();
         setTimerButton.onClick.RemoveAllListeners();
+
+        AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 
-    public void RefreshPlayerStats()
+    public void EnableSlotsFullPopUp()
     {
-        coins.text = PlayerService.Instance.GetCoinsInAccount().ToString();
-        gems.text = PlayerService.Instance.GetGemsInAccount().ToString();
+        rayCastBlocker.SetActive(true);
+        chestSlotsFullPopUp.SetActive(true);
+    }
+
+    private void DisableSlotsFullPopUp()
+    {
+        rayCastBlocker.SetActive(false);
+        chestSlotsFullPopUp.SetActive(false);
+
+        AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 }

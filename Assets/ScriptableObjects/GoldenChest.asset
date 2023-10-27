@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d2856fa18d3a4458d4ea638394deaf, type: 3}
+  m_Name: GoldenChest
+  m_EditorClassIdentifier: 
+  chestClosedImage: {fileID: 21300000, guid: a07776dc99c3a8d47bc2d1d1f43c7209, type: 3}
+  chestOpenImage: {fileID: 21300000, guid: c274ac0db172efc488ce3ab28f7ef702, type: 3}
+  coinsMin: 30
+  coinsMax: 60
+  gemsMin: 5
+  gemsMax: 10
+  unlockDurationMinutes: 15

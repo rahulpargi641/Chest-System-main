@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +10,7 @@ public class ChestView : MonoBehaviour
     public TextMeshProUGUI TopText { get { return topText; } private set { } }
     public TextMeshProUGUI BottomText { get { return bottomText; } private set { } }
     public Image ChestImage { get { return chestImage; } private set { } }
+    public int TimeRemainingSeconds { get; private set; }
 
     [SerializeField] private RectTransform chestRectTransform;
     [SerializeField] private Image chestImage;
@@ -18,38 +19,51 @@ public class ChestView : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bottomText;
 
     private ChestController chestController;
-    private ChestSlot slot;
-    public void SetController(ChestController controller)
-    {
-        this.chestController = controller;
-    }
-
-    //This method requires both chest and slot to be anchored about same anchor.
-    public void SetSlot(ChestSlot slot)
-    {
-        this.slot = slot;
-        chestRectTransform.anchoredPosition = slot.GetRectTransform().anchoredPosition;
-    }
-    public void ChangeChestImage()
-    {
-        chestImage.sprite = chestController.ChestModel.ChestClosedImage;
-    }
-    public void DestroyChest()
-    {
-        slot.SetIsEmpty(true);
-        ChestService.Instance.ChestControllerList.Remove(this.chestController);
-        Destroy(this.gameObject);
-    }
+    private ChestSlot chestslot;
 
     private void Awake()
     {
         transform.SetParent(ChestService.Instance.ChestParentTransform);
+        chestRectTransform.localScale = new Vector3(1, 1, 1);
     }
 
-    private void Start()
+    public void SetController(ChestController controller)
     {
-        ChangeChestImage();
+        chestController = controller;
+    }
 
+    // Sets both chest and slot to be anchored about same anchor.
+    public void SetSlot(ChestSlot chestSlot)
+    {
+        chestslot = chestSlot;
+        chestRectTransform.anchoredPosition = chestSlot.GetRectTransform().anchoredPosition;
+    }
+    
+    public void DestroyChest()
+    {
+        chestslot.SetIsEmpty(true);
+        chestButton.onClick.RemoveAllListeners();
+        chestController.RemoveView();
+    }
+
+    public IEnumerator CountDown()
+    {
+        while (TimeRemainingSeconds >= 0)
+        {
+            TimeSpan timeSpan = TimeSpan.FromSeconds(TimeRemainingSeconds);
+            string timeString = timeSpan.ToString(@"hh\:mm\:ss");
+            BottomText.text = timeString;
+
+            TimeRemainingSeconds--;
+            yield return new WaitForSeconds(1);
+        }
+        chestController.UnlockNow();
+    }
+
+    public void InitialSettings()
+    {
+        chestImage.sprite = chestController.ChestModel.ChestClosedImage;
+        TimeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
         chestButton.onClick.AddListener(chestController.ChestButtonAction);
     }
 }
