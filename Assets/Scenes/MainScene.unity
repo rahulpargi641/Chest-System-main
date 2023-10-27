@@ -432,6 +432,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7850456c3cf99f94da755e18a445c35e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gemsInAccount: 0
+  coinsInAccount: 0
 --- !u!1 &230426020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,6 +1952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002e82b8b75ecef48a81f6368e30853b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <UnlockButtonInitialPos>k__BackingField: {x: 0, y: 0}
   createChestButton: {fileID: 1397946980}
   rayCastBlocker: {fileID: 1742409923}
   chestSlotsFullPopUp: {fileID: 2068737721}
@@ -4042,7 +4045,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1882969400}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74cb6ea169b95504aa490640c8938012, type: 3}
+  m_Script: {fileID: 11500000, guid: e5e60d30525ad3642977d9c0a79b08a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   chestList:
@@ -4054,7 +4057,8 @@ MonoBehaviour:
     probabilityPercentage: 15
   - chestObject: {fileID: 11400000, guid: 666d582f9da8bb14cb20a6074f98bde9, type: 2}
     probabilityPercentage: 5
-  chestParentTransform: {fileID: 607663608}
+  chestPrefab: {fileID: 2102871894, guid: 4bec59f05179a9443906f61cb224ecf8, type: 3}
+  chestParentTransform: {fileID: 0}
 --- !u!4 &1882969402
 Transform:
   m_ObjectHideFlags: 0
@@ -4222,6 +4226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestPrefab: {fileID: 2102871894, guid: 4bec59f05179a9443906f61cb224ecf8, type: 3}
+  numberOfSlots: 0
 --- !u!4 &1956240460
 Transform:
   m_ObjectHideFlags: 0
@@ -4419,7 +4424,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2058661131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd6beccdd28f4ac49aff3fea87778fbf, type: 3}
+  m_Script: {fileID: 11500000, guid: 229296aeef3ed674a8aca4d80751f3b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slotList:
