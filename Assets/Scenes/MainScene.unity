@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.7019608}
+  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -200,6 +200,86 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105049823}
   m_CullTransparentMesh: 1
+--- !u!1 &109405514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 109405516}
+  - component: {fileID: 109405515}
+  m_Layer: 0
+  m_Name: Audio Service
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &109405515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109405514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822f2d81fb325ff44a928437d56f8dd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - soundType: 1
+    clip: {fileID: 8300000, guid: 41fe389abc552ae4ea67e78dcfbfa9fb, type: 3}
+    volume: 0.7
+    pitch: 1
+    loop: 0
+  - soundType: 2
+    clip: {fileID: 8300000, guid: cad11a4481c77fe4aabeb5563cb0bd6c, type: 3}
+    volume: 0.4
+    pitch: 1
+    loop: 0
+  - soundType: 0
+    clip: {fileID: 8300000, guid: bf9b1ac3735084d468d7debf7da0c0d6, type: 3}
+    volume: 0.45
+    pitch: 1
+    loop: 1
+  - soundType: 4
+    clip: {fileID: 8300000, guid: bd48d0a8822e6094d984413463ce979d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - soundType: 5
+    clip: {fileID: 8300000, guid: 9d37cc1f6edfd914f9a53ecee1e9cdeb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - soundType: 6
+    clip: {fileID: 8300000, guid: 1ff5c362faa6bbf41b9de647f16c6aff, type: 3}
+    volume: 2
+    pitch: 1
+    loop: 0
+  - soundType: 3
+    clip: {fileID: 8300000, guid: 625ad317b451ec147984e94636d712a6, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+--- !u!4 &109405516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109405514}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &182043829
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.7019608}
+  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -750,8 +830,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Chest \nSlot"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
+  m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -997,7 +1077,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -363, y: 163}
+  m_AnchoredPosition: {x: -363, y: 139}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &298086524
@@ -1020,7 +1100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 546a63767dbed9f41befa24ca5c11324, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c4ab643956f8265478c621cdd1cd6445, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1460,7 +1540,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 363, y: 163}
+  m_AnchoredPosition: {x: 363, y: 138.99997}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &652811013
@@ -1483,7 +1563,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 546a63767dbed9f41befa24ca5c11324, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c4ab643956f8265478c621cdd1cd6445, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2291,7 +2371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.7019608}
+  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2632,8 +2712,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Chest \nSlot"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
+  m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2774,7 +2854,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You got 100 '
+  m_text: You got 50
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
@@ -2905,7 +2985,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9150943, g: 0.8494838, b: 0.9107203, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.8, g: 0.76862746, b: 0.76862746, a: 0.5019608}
@@ -2940,7 +3020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8962264, g: 0.8742435, b: 0.8742435, a: 1}
+  m_Color: {r: 0.9433962, g: 0.9202563, b: 0.9202563, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3311,7 +3391,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 200
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
@@ -3601,8 +3681,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Chest \nSlot"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
+  m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3734,7 +3814,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 200
+  m_text: 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
@@ -3870,7 +3950,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You got 200 '
+  m_text: You got 100
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
@@ -4046,14 +4126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chestList:
-  - chestSO: {fileID: 11400000, guid: 3291294df1f6ddd43b4b3aae2d11b1af, type: 2}
-    chestFindingProbability: 60
-  - chestSO: {fileID: 11400000, guid: 1b214229965836e498aec4e401128c64, type: 2}
-    chestFindingProbability: 50
   - chestSO: {fileID: 11400000, guid: 666d582f9da8bb14cb20a6074f98bde9, type: 2}
-    chestFindingProbability: 40
+    chestFindingProbability: 25
+  - chestSO: {fileID: 11400000, guid: 3291294df1f6ddd43b4b3aae2d11b1af, type: 2}
+    chestFindingProbability: 25
+  - chestSO: {fileID: 11400000, guid: 1b214229965836e498aec4e401128c64, type: 2}
+    chestFindingProbability: 25
   - chestSO: {fileID: 11400000, guid: 0169193a83b708242b165bb72a0e5ad2, type: 2}
-    chestFindingProbability: 30
+    chestFindingProbability: 25
   chestParentTransform: {fileID: 607663608}
 --- !u!4 &1882969402
 Transform:
@@ -4352,7 +4432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 7, y: 348}
+  m_AnchoredPosition: {x: 7, y: 352}
   m_SizeDelta: {x: 800, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2055319892
@@ -4580,8 +4660,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Chest \nSlot"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
+  m_sharedMaterial: {fileID: 8862777895103793419, guid: 4333e5192c490a44eba487ca36814e7e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4775,7 +4855,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.7019608}
+  m_Color: {r: 0, g: 0.6497312, b: 0.9056604, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

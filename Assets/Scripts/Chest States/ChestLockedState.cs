@@ -60,5 +60,7 @@ public class ChestLockedState : IChestState
         unlockNowButton.onClick.AddListener(chestController.UnlockNow);
         setTimerButton.onClick.AddListener(chestController.StartUnlocking);
         UIService.Instance.EnableChestPopUp();
+
+        AudioService.Instance.PlaySound(SoundType.OpenChest);
     }
 }

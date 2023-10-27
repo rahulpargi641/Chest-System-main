@@ -16,6 +16,6 @@ MonoBehaviour:
   chestOpenImage: {fileID: 21300000, guid: c274ac0db172efc488ce3ab28f7ef702, type: 3}
   coinsMin: 30
   coinsMax: 60
-  gemsMin: 30
-  gemsMax: 60
+  gemsMin: 5
+  gemsMax: 10
   unlockDurationMinutes: 15

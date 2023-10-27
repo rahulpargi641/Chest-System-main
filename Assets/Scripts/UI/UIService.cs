@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,38 +39,6 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     public static event Action OnChestPopUpClosed;
 
-    public void RefreshPlayerStats()
-    {
-        coins.text = PlayerService.Instance.GetCoinsInAccount().ToString();
-        gems.text = PlayerService.Instance.GetGemsInAccount().ToString();
-    }
-    public void EnableChestPopUp()
-    {
-        rayCastBlocker.SetActive(true);
-        chestPopUp.SetActive(true);
-    }
-    public void DisableChestPopUp()
-    {
-        rayCastBlocker.SetActive(false);
-        chestPopUp.SetActive(false);
-        unlockNowButton.gameObject.SetActive(false);
-        setTimerButton.gameObject.SetActive(false);
-        giftMessage.gameObject.SetActive(false);
-
-        OnChestPopUpClosed?.Invoke();
-        unlockNowButton.onClick.RemoveAllListeners();
-        setTimerButton.onClick.RemoveAllListeners();
-    }
-    public void EnableSlotsFullPopUp()
-    {
-        rayCastBlocker.SetActive(true);
-        chestSlotsFullPopUp.SetActive(true);
-    }
-    private void DisableSlotsFullPopUp()
-    {
-        rayCastBlocker.SetActive(false);
-        chestSlotsFullPopUp.SetActive(false);
-    }
     private void Start()
     {
         rayCastBlocker.SetActive(false);
@@ -88,5 +54,48 @@ public class UIService : MonoSingletonGeneric<UIService>
         closeChestPopUpButton.onClick.AddListener(DisableChestPopUp);
 
         RefreshPlayerStats();
+
+        AudioService.Instance.PlaySound(SoundType.BgMusic);
+    }
+
+    public void RefreshPlayerStats()
+    {
+        coins.text = PlayerService.Instance.GetCoinsInAccount().ToString();
+        gems.text = PlayerService.Instance.GetGemsInAccount().ToString();
+    }
+
+    public void EnableChestPopUp()
+    {
+        rayCastBlocker.SetActive(true);
+        chestPopUp.SetActive(true);
+    }
+
+    public void DisableChestPopUp()
+    {
+        rayCastBlocker.SetActive(false);
+        chestPopUp.SetActive(false);
+        unlockNowButton.gameObject.SetActive(false);
+        setTimerButton.gameObject.SetActive(false);
+        giftMessage.gameObject.SetActive(false);
+
+        OnChestPopUpClosed?.Invoke();
+        unlockNowButton.onClick.RemoveAllListeners();
+        setTimerButton.onClick.RemoveAllListeners();
+
+        AudioService.Instance.PlaySound(SoundType.ButtonClose);
+    }
+
+    public void EnableSlotsFullPopUp()
+    {
+        rayCastBlocker.SetActive(true);
+        chestSlotsFullPopUp.SetActive(true);
+    }
+
+    private void DisableSlotsFullPopUp()
+    {
+        rayCastBlocker.SetActive(false);
+        chestSlotsFullPopUp.SetActive(false);
+
+        AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 }

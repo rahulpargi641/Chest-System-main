@@ -55,6 +55,8 @@ public class ChestController
         currentState.OnStateDisable();
         currentState = chestUnlocked;
         currentState.OnStateEnable();
+
+        AudioService.Instance.PlaySound(SoundType.UnlockNow);
     }
 
     public void StartUnlocking()
@@ -62,5 +64,7 @@ public class ChestController
         currentState.OnStateDisable();
         currentState = chestUnlocking;
         currentState.OnStateEnable();
+
+        AudioService.Instance.PlaySound(SoundType.StartUnlocking);
     }
 }

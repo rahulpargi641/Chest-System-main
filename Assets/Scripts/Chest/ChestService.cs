@@ -38,6 +38,8 @@ public class ChestService : MonoSingletonGeneric<ChestService>
         controller.SetModel(chestRarity.GetModel());
         controller.SetChestView();
         controller.ChestView.SetSlot(slot);
+
+        AudioService.Instance.PlaySound(SoundType.ButtonClick);
     }
 
     private ChestRarity GetRandomChestRarity()

@@ -20,7 +20,7 @@ public class ChestUnlockedState : IChestState
     {
         chestController.ChestView.TopText.text = "Unlocked";
         chestController.ChestView.BottomText.text = "OPEN";
-        giftMessage.text = "Woooh!!!";
+        giftMessage.text = "Congrats!!";
         chestController.ChestView.ChestImage.sprite = chestController.ChestModel.ChestOpenImage;
     }
 
@@ -35,6 +35,8 @@ public class ChestUnlockedState : IChestState
         giftMessage.gameObject.SetActive(true);
         SetGifts();
         UIService.Instance.EnableChestPopUp();
+
+        AudioService.Instance.PlaySound(SoundType.GiftReceived);
     }
 
     public ChestState GetChestState()
@@ -57,8 +59,8 @@ public class ChestUnlockedState : IChestState
         int giftCoins = Random.Range(coinsMin, coinsMax + 1);
         int giftGems = Random.Range(gemsMin, gemsMax + 1);
 
-        giftCoinText.text = "You got " + giftCoins.ToString();
-        giftGemText.text = "You got " + giftGems.ToString();
+        giftCoinText.text = "You got  " + giftCoins.ToString();
+        giftGemText.text = "You got  " + giftGems.ToString();
 
         PlayerService.Instance.IncrementCoins(giftCoins);
         PlayerService.Instance.IncrementGems(giftGems);
