@@ -2,9 +2,9 @@
  
 ### Introduction
 
-    Chest System is a project that demonstrates a comprehensive chest system, inspired by Clash Royale's mechanics.
-    This project places significant emphasis on maintaining code quality and ensuring the game's adaptability for 
-    future enhancements.
+    Chest System is a project that demonstrates a comprehensive chest system, inspired by Clash Royale's
+    mechanics. This project places significant emphasis on maintaining code quality and ensuring the game's 
+    adaptability for future enhancements.
 
 ### Features
     Currencies: Manage two in-game currencies - Coins and Gems.
@@ -40,11 +40,13 @@
         A Service class efficiently creates and manages chests.
 
     Singletons
-        Essential services, such as Chest Service and UI Service, are implemented as singletons for centralized and efficient control.
+       - Essential services, such as Chest Service and UI Service, are implemented as singletons for 
+        centralized and efficient control.
 
     Scriptable Objects: Chest Types
-        Four distinct chest types are available: COMMON, RARE, EPIC, and LEGENDARY.
-        Each chest type is associated with randomized rewards in terms of coins, gems, and unique chest unlocking times.
+       - Four distinct chest types are available: COMMON, RARE, EPIC, and LEGENDARY.
+       - Each chest type is associated with randomized rewards in terms of coins, gems, and unique 
+        chest unlocking times.
 
     State Pattern
         LOCKED state: Options to unlock using gems or initiate the unlocking timer.
