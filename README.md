@@ -48,7 +48,7 @@
         - Each chest type is associated with randomized rewards in terms of coins, gems, and unique 
           chest unlocking times.
 
-    State Pattern
+    State Pattern:
         - LOCKED state: Options to unlock using gems or initiate the unlocking timer.
         - UNLOCKING state: Gem-based instant unlocking or a countdown display until the chest is open.
         - UNLOCKED state: A prompt to open the chest, revealing your rewards, with the chest disappearing 
