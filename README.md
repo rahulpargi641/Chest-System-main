@@ -55,11 +55,11 @@
           after collection.
        
 #### Performance Optimization:
-     - To optimize performance, object pooling is implemented for chests which helps manage memory and 
+    - To optimize performance, object pooling is implemented for chests which helps manage memory and 
           CPU usage efficiently.
 
 #### Chest System Design:
-     - Used a background image and chest images that closely resemble the aesthetics of Clash Royale,
+    - Used a background image and chest images that closely resemble the aesthetics of Clash Royale,
     
 ### Focus
     - Code Quality and Organization.
