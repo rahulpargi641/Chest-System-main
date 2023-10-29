@@ -7,27 +7,27 @@
     adaptability for future enhancements.
 
 ### Features
-    Currencies: Manage two in-game currencies - Coins and Gems.
+    - Currencies: Manage two in-game currencies - Coins and Gems.
     
-    Chest Types: Support different chest types with highly configurable probabilities.
+    - Chest Types: Support different chest types with highly configurable probabilities.
     
-    Chest Slots: Store up to four chests in your inventory.
+    - Chest Slots: Store up to four chests in your inventory.
     
-    Generate Chests: Randomly generate various types of chests to fill empty slots.
+    - Generate Chests: Randomly generate various types of chests to fill empty slots.
     
-    Chest Timer: Initiate a timer for unlocking chests.
+    - Chest Timer: Initiate a timer for unlocking chests.
     
-    Unlock with Timer: Choose to unlock chests after the timer completes.
+    - Unlock with Timer: Choose to unlock chests after the timer completes.
     
-    Unlock with Gems: Spend gems to instantly unlock chests for immediate rewards.
+    - Unlock with Gems: Spend gems to instantly unlock chests for immediate rewards.
     
-    Slot Availability: Get notified when your chest slots are full.
+    - Slot Availability: Get notified when your chest slots are full.
     
-    Chest States: Experience locked, unlocking, unlocked but uncollected, and collected chest states.
+    - Chest States: Experience locked, unlocking, unlocked but uncollected, and collected chest states.
     
-    Reward System: Enjoy rewards based on the type of chest you unlock.
+    - Reward System: Enjoy rewards based on the type of chest you unlock.
     
-    Queueing: Smartly queue chests for unlocking after the current chest's timer finishes.
+    - Queueing: Smartly queue chests for unlocking after the current chest's timer finishes.
     
 ### Screenshots
 
@@ -46,13 +46,13 @@
     Scriptable Objects: Chest Types
         - Four distinct chest types are available: COMMON, RARE, EPIC, and LEGENDARY.
         - Each chest type is associated with randomized rewards in terms of coins, gems, and unique 
-         chest unlocking times.
+          chest unlocking times.
 
     State Pattern
         - LOCKED state: Options to unlock using gems or initiate the unlocking timer.
         - UNLOCKING state: Gem-based instant unlocking or a countdown display until the chest is open.
         - UNLOCKED state: A prompt to open the chest, revealing your rewards, with the chest disappearing 
-         after collection.
+          after collection.
        
 #### Performance Optimization:
         - To optimize performance, object pooling is implemented for chests which helps manage memory and 
