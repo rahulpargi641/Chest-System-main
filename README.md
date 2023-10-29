@@ -36,28 +36,30 @@
 ### Code Structure and Game Design
 
     Model-View-Controller-Service (MVC-S):
-        The Chest entity is structured around the Model, View, and Controller components.
-        A Service class efficiently creates and manages chests.
+       - The Chest entity is structured around the Model, View, and Controller components.
+       - A Service class efficiently creates and manages chests.
 
-    Singletons
-       - Essential services, such as Chest Service and UI Service, are implemented as singletons for 
-        centralized and efficient control.
+    Singletons:
+        - Essential services, such as Chest Service and UI Service, are implemented as singletons for 
+          centralized and efficient control.
 
     Scriptable Objects: Chest Types
-       - Four distinct chest types are available: COMMON, RARE, EPIC, and LEGENDARY.
-       - Each chest type is associated with randomized rewards in terms of coins, gems, and unique 
-        chest unlocking times.
+        - Four distinct chest types are available: COMMON, RARE, EPIC, and LEGENDARY.
+        - Each chest type is associated with randomized rewards in terms of coins, gems, and unique 
+         chest unlocking times.
 
     State Pattern
-        LOCKED state: Options to unlock using gems or initiate the unlocking timer.
-        UNLOCKING state: Gem-based instant unlocking or a countdown display until the chest is open.
-        UNLOCKED state: A prompt to open the chest, revealing your rewards, with the chest disappearing after collection.
+        - LOCKED state: Options to unlock using gems or initiate the unlocking timer.
+        - UNLOCKING state: Gem-based instant unlocking or a countdown display until the chest is open.
+        - UNLOCKED state: A prompt to open the chest, revealing your rewards, with the chest disappearing 
+         after collection.
        
 #### Performance Optimization:
-    - To optimize performance, object pooling is implemented for chests which helps manage memory and CPU usage efficiently.
+        - To optimize performance, object pooling is implemented for chests which helps manage memory and 
+          CPU usage efficiently.
 
 #### Chest System Design:
-    - Used a background image and chest images that closely resemble the aesthetics of Clash Royale,
+        - Used a background image and chest images that closely resemble the aesthetics of Clash Royale,
     
 ### Focus
     - Code Quality and Organization.
