@@ -67,7 +67,6 @@
     - Visually appealing, with soothing music and sound effects. 
 
 ### Gameplay Demonstration
-
     For a visual demonstration of the gameplay, watch video on YouTube.
 
 ### Play the Game
