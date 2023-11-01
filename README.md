@@ -70,4 +70,5 @@
     For a visual demonstration of the gameplay, watch video on YouTube.
 
 ### Play the Game
-    To experience the game firsthand, play it directly by following this playable link.![image](https://github.com/rahulpargi641/Chest-System-Outscal/assets/61396833/8d2b9e20-5afa-4cfe-ba73-39b707a59699)
+    To experience the game firsthand, play it directly by following this playable link.
+   - https://rahul-pargi.itch.io/chest-system
