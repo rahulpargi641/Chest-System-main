@@ -30,8 +30,15 @@
     - Queueing: Smartly queue chests for unlocking after the current chest's timer finishes.
     
 ### Screenshots
-
-   (Insert screenshots)
+   ![EmeptySlots](./Screenshots/EmeptySlots.png)
+   ![FullSlots](./Screenshots/FullSlots.png)
+   ![SelectedChest](./Screenshots/SelectedChest.png)
+   ![StartUnlockingChest](./Screenshots/StartUnlockingChest.png)
+   ![ChestUnlocking](./Screenshots/ChestUnlocking.png)
+   ![UnlockNow](./Screenshots/UnlockNow.png)
+   ![GotReward](./Screenshots/GotReward.png)
+   ![ChestUnlockedOpenNow](./Screenshots/ChestUnlockedOpenNow.png)
+   ![NextRoundSelection](./Screenshots/NextRoundSelection.png)
   
 ### Code Structure and Game Design
 
@@ -67,8 +74,9 @@
     - Visually appealing, with soothing music and sound effects. 
 
 ### Gameplay Demonstration
-    For a visual demonstration of the gameplay, watch video on YouTube.
+    For a visual demonstration of the gameplay, watch video on YouTube:
+   [Youtube video link](https://youtu.be/Ay9IrGyR-Hk)
 
 ### Play the Game
-    To experience the game firsthand, play it directly by following this playable link.
-   - https://rahul-pargi.itch.io/chest-system
+    To experience the game firsthand, play it directly by following this playable link:
+  [Play in browser(WebGl)](https://rahul-pargi.itch.io/chest-system)
