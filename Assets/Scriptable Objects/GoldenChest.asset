@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5453f9ae6db92724b863e7b86df6e6ca, type: 3}
+  m_Name: GoldenChest
+  m_EditorClassIdentifier: 
+  <ChestType>k__BackingField: 1
+  <ChestClosedImage>k__BackingField: {fileID: 21300000, guid: a07776dc99c3a8d47bc2d1d1f43c7209, type: 3}
+  <ChestOpenImage>k__BackingField: {fileID: 21300000, guid: c274ac0db172efc488ce3ab28f7ef702, type: 3}
+  <ChestFindingProbability>k__BackingField: 60
+  <UnlockDurationMinutes>k__BackingField: 1
+  <TimeReductionByGemSeconds>k__BackingField: 600
+  <CoinsMin>k__BackingField: 10
+  <CoinsMax>k__BackingField: 20
+  <GemsMin>k__BackingField: 5
+  <GemsMax>k__BackingField: 10

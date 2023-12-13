@@ -1,69 +1,55 @@
 using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChestView : MonoBehaviour
 {
-    public Button ChestButton { get { return chestButton; } private set { } }
-    public TextMeshProUGUI TopText { get { return topText; } private set { } }
-    public TextMeshProUGUI BottomText { get { return bottomText; } private set { } }
-    public Image ChestImage { get { return chestImage; } private set { } }
-    public int TimeRemainingSeconds { get; private set; }
+    public TextMeshProUGUI CurrentChestStateText => currentChestStateText;
+    public TextMeshProUGUI TimeLeftUntilUnlockText => timeLeftUntilUnlockText;
+    public Image ChestImage => chestImage;
+    public ChestController Controller { private get; set; }
+    public EChestState CurrentState => Controller.CurrentState;
+
+    public static event Action<ChestView> OnChestOpened;
 
     [SerializeField] private RectTransform chestRectTransform;
     [SerializeField] private Image chestImage;
     [SerializeField] private Button chestButton;
-    [SerializeField] private TextMeshProUGUI topText;
-    [SerializeField] private TextMeshProUGUI bottomText;
+    [SerializeField] private TextMeshProUGUI currentChestStateText;
+    [SerializeField] private TextMeshProUGUI timeLeftUntilUnlockText;
 
-    private ChestController chestController;
-    private ChestSlot chestslot;
-
-    private void Awake()
+    public void SetRectTransform(Transform chestParentTransform, Transform slotRectTransform)
     {
-        transform.SetParent(ChestService.Instance.ChestParentTransform);
-        chestRectTransform.localScale = new Vector3(1, 1, 1);
+        chestRectTransform.position = slotRectTransform.position;
+        transform.SetParent(chestParentTransform);
     }
 
-    public void SetController(ChestController controller)
+    public void AddChestButtonListener()
     {
-        chestController = controller;
+        chestButton.onClick.AddListener(Controller.ChestButtonClickedOn);
     }
 
-    // Sets both chest and slot to be anchored about same anchor.
-    public void SetSlot(ChestSlot chestSlot)
+    public void RemoveChest()
     {
-        chestslot = chestSlot;
-        chestRectTransform.anchoredPosition = chestSlot.GetRectTransform().anchoredPosition;
-    }
-    
-    public void DestroyChest()
-    {
-        chestslot.SetIsEmpty(true);
+        Controller = null;
         chestButton.onClick.RemoveAllListeners();
-        chestController.RemoveView();
+
+        OnChestOpened?.Invoke(this); // sends back to pool
     }
 
-    public IEnumerator CountDown()
+    public void StartUnlocking()
     {
-        while (TimeRemainingSeconds >= 0)
-        {
-            TimeSpan timeSpan = TimeSpan.FromSeconds(TimeRemainingSeconds);
-            string timeString = timeSpan.ToString(@"hh\:mm\:ss");
-            BottomText.text = timeString;
-
-            TimeRemainingSeconds--;
-            yield return new WaitForSeconds(1);
-        }
-        chestController.UnlockNow();
+        Controller.StartUnlocking();
     }
 
-    public void InitialSettings()
+    public void EnableChest()
     {
-        chestImage.sprite = chestController.ChestModel.ChestClosedImage;
-        TimeRemainingSeconds = chestController.ChestModel.UnlockDurationMinutes * 60;
-        chestButton.onClick.AddListener(chestController.ChestButtonAction);
+        gameObject.SetActive(true);
+    }
+
+    public void DisableChest()
+    {
+        gameObject.SetActive(false);
     }
 }

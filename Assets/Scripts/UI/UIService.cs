@@ -5,63 +5,73 @@ using UnityEngine.UI;
 
 public class UIService : MonoSingletonGeneric<UIService>
 {
-    public RectTransform UnlockNowRectTransform { get { return unlockNowRectTransform; } private set { } }
+    public static event Action OnRewardCollected;
+    public Button StartUnlockingButton => startUnlockingButton;
+    public Button UnlockNowButton => unlockNowButton;
+    public RectTransform UnlockNowButtonRectTransform => unlockNowButtonRectTransform;
+    public TextMeshProUGUI UnlockNowText => unlockNowText;
+    public Vector2 UnlockNowButtonInitialPos { get; private set; }
+    public TextMeshProUGUI RewardMessage => rewardMessage;
+    public TextMeshProUGUI RewardCoinText => rewardCoinText;
+    public TextMeshProUGUI RewardGemText => rewardGemText;
 
-    public Vector2 UnlockButtonInitialPos { get; private set; }
-    public Button UnlockNowButton { get { return unlockNowButton; } private set { } }
-    public Button SetTimerButton { get { return setTimerButton; } private set { } }
-    public TextMeshProUGUI GiftMessage { get { return giftMessage; } private set { } }
-    public TextMeshProUGUI GiftCoinText { get { return giftCoinText; } private set { } }
-    public TextMeshProUGUI GiftGemText { get { return giftGemText; } private set { } }
-    public TextMeshProUGUI UnlockText { get { return unlockText; } private set { } }
-
-    [Header("Chest Related")]
-    [SerializeField] private Button createChestButton;
+    [Header("Raycast Blocker")]
     [SerializeField] private GameObject rayCastBlocker;
-    [SerializeField] private GameObject chestSlotsFullPopUp;
+
+    [Header("Buttons")]
+    [SerializeField] private Button createChestButton;
+    [SerializeField] private Button startUnlockingButton;
+    [SerializeField] private Button unlockNowButton;
+    [SerializeField] private Button closeChestPopUpButton;
     [SerializeField] private Button closeChestSlotsFullButton;
 
-    [Header("Chest Pop Up")]
+    [Header("PopUps")]
     [SerializeField] private GameObject chestPopUp;
-    [SerializeField] private Button closeChestPopUpButton;
-    [SerializeField] private Button unlockNowButton;
-    [SerializeField] private RectTransform unlockNowRectTransform;
-    [SerializeField] private TextMeshProUGUI unlockText;
-    [SerializeField] private Button setTimerButton;
-    [SerializeField] private TextMeshProUGUI giftMessage;
-    [SerializeField] private TextMeshProUGUI giftCoinText;
-    [SerializeField] private TextMeshProUGUI giftGemText;
+    [SerializeField] private GameObject chestSlotsFullPopUp;
 
-    [Header("Player Stats")]
+    [Header("Unlock Now Text")]
+    [SerializeField] private RectTransform unlockNowButtonRectTransform;
+    [SerializeField] private TextMeshProUGUI unlockNowText;
+
+    [Header("Reward Texts")]
+    [SerializeField] private TextMeshProUGUI rewardMessage;
+    [SerializeField] private TextMeshProUGUI rewardCoinText;
+    [SerializeField] private TextMeshProUGUI rewardGemText;
+
+    [Header("Currency Texts")]
     [SerializeField] private TextMeshProUGUI coins;
     [SerializeField] private TextMeshProUGUI gems;
-
-
-    public static event Action OnChestPopUpClosed;
 
     private void Start()
     {
         rayCastBlocker.SetActive(false);
-        chestSlotsFullPopUp.SetActive(false);
-        chestPopUp.SetActive(false);
-        unlockNowButton.gameObject.SetActive(false);
-        setTimerButton.gameObject.SetActive(false);
-        giftMessage.gameObject.SetActive(false);
-        UnlockButtonInitialPos = unlockNowRectTransform.anchoredPosition;
 
-        createChestButton.onClick.AddListener(ChestService.Instance.SpawnRandomChest);
+        chestPopUp.SetActive(false);
+        chestSlotsFullPopUp.SetActive(false);
+
+        unlockNowButton.gameObject.SetActive(false);
+        startUnlockingButton.gameObject.SetActive(false);
+        UnlockNowButtonInitialPos = unlockNowButtonRectTransform.anchoredPosition;
+
+        rewardMessage.gameObject.SetActive(false);
+        SetCurrencyStats();
+
+        createChestButton.onClick.AddListener(CreateChest);
         closeChestSlotsFullButton.onClick.AddListener(DisableSlotsFullPopUp);
         closeChestPopUpButton.onClick.AddListener(DisableChestPopUp);
-
-        RefreshPlayerStats();
 
         AudioService.Instance.PlaySound(SoundType.BgMusic);
     }
 
-    public void RefreshPlayerStats()
+    private void CreateChest()
     {
-        coins.text = PlayerService.Instance.GetCoinsInAccount().ToString();
-        gems.text = PlayerService.Instance.GetGemsInAccount().ToString();
+        ChestService.Instance.SpawnRandomChest();
+    }
+
+    public void SetCurrencyStats()
+    {
+        coins.text = CurrencyService.Instance.GetCoinsInAccount().ToString();
+        gems.text = CurrencyService.Instance.GetGemsInAccount().ToString();
     }
 
     public void EnableChestPopUp()
@@ -74,13 +84,16 @@ public class UIService : MonoSingletonGeneric<UIService>
     {
         rayCastBlocker.SetActive(false);
         chestPopUp.SetActive(false);
-        unlockNowButton.gameObject.SetActive(false);
-        setTimerButton.gameObject.SetActive(false);
-        giftMessage.gameObject.SetActive(false);
 
-        OnChestPopUpClosed?.Invoke();
+        unlockNowButton.gameObject.SetActive(false);
+        startUnlockingButton.gameObject.SetActive(false);
+
+        rewardMessage.gameObject.SetActive(false);
+
+        OnRewardCollected?.Invoke();
+
         unlockNowButton.onClick.RemoveAllListeners();
-        setTimerButton.onClick.RemoveAllListeners();
+        startUnlockingButton.onClick.RemoveAllListeners();
 
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
