@@ -4,22 +4,26 @@ public class ChestModel
 {
     public Sprite ChestClosedImage { get; private set; }
     public Sprite ChestOpenImage { get; private set; }
+    public int ChestFindingProbability { get; private set; }
+    public int UnlockDurationMinutes { get; private set; }
+    public float TimeReductionByGemSeconds { get; private set; }
     public int CoinsMin { get; private set; }
     public int CoinsMax { get; private set; }
     public int GemsMin { get; private set; }
     public int GemsMax { get; private set; }
-    public int UnlockDurationMinutes { get; private set; }
 
-    public ChestModel(ChestScriptableObject chestObject)
+    public ChestModel(ChestSO chestSO)
     {
-        ChestClosedImage = chestObject.chestClosedImage;
-        ChestOpenImage = chestObject.chestOpenImage;
+        ChestClosedImage = chestSO.ChestClosedImage;
+        ChestOpenImage = chestSO.ChestOpenImage;
 
-        CoinsMin = chestObject.coinsMin;
-        CoinsMax = chestObject.coinsMax;
-        GemsMin = chestObject.gemsMin;
-        GemsMax = chestObject.gemsMax;
+        ChestFindingProbability = chestSO.ChestFindingProbability;
+        UnlockDurationMinutes = chestSO.UnlockDurationMinutes;
+        TimeReductionByGemSeconds = chestSO.TimeReductionByGemSeconds;
 
-        UnlockDurationMinutes = chestObject.unlockDurationMinutes;
+        CoinsMin = chestSO.CoinsMin;
+        CoinsMax = chestSO.CoinsMax;
+        GemsMin = chestSO.GemsMin;
+        GemsMax = chestSO.GemsMax;
     }
 }

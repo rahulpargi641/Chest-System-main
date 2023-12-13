@@ -1,70 +1,97 @@
+using System;
+using UnityEngine;
 
 public class ChestController
 {
-    public ChestModel ChestModel { get; private set; }
-    public ChestView ChestView { get; private set; }
-    public float TimeSecondsPerGem { get { return 600f; } private set { } } //10 minutes = 1 gem
-    public ChestState ChestState { get { return currentState.GetChestState(); } private set { } }
+    public ChestModel Model { get; private set; }
+    public ChestView View { get; private set; }
+    public EChestState CurrentState => currentState.GetChestState();
 
-    private IChestState currentState;
     private ChestLockedState chestLocked;
     private ChestUnlockingState chestUnlocking;
     private ChestUnlockedState chestUnlocked;
+    private IChestState currentState;
 
-    public ChestController()
+    private ChestSlot chestSlot;
+
+    public ChestController(ChestModel model, ChestView view)
+    {
+        Model = model;
+        View = view;
+        view.Controller = this;
+
+        CreateChestStates();
+        SetCurrentState();
+    }
+
+    private void CreateChestStates()
     {
         chestLocked = new ChestLockedState(this);
         chestUnlocking = new ChestUnlockingState(this);
         chestUnlocked = new ChestUnlockedState(this);
-
-        currentState = chestLocked;
     }
 
-    public void SetModel(ChestModel chestModel)
-    {
-        ChestModel = chestModel;
-    }
-
-    public void SetChestView()
-    {
-        ChestView = ChestPoolService.Instance.GetFromPool(this);
-        SetInitialState();
-    }
-
-    public void RemoveView()
-    {
-        ChestPoolService.Instance.ReturnToPool(ChestView);
-        ChestView = null;
-    }
-
-    public void SetInitialState()
+    private void SetCurrentState()
     {
         currentState = chestLocked;
-        currentState.OnStateEnable();
+        currentState.OnStateEnter();
     }
 
-    public void ChestButtonAction()
+    public void SetupChest(ChestSlot chestSlot, Transform chestParentTransform)
     {
-        currentState.ChestButtonAction();
+        this.chestSlot = chestSlot;
+
+        View.SetRectTransform(chestParentTransform, chestSlot.SlotRectTransform);
+        View.AddChestButtonListener();
     }
 
-    public void UnlockNow()
+    // get called when OpenChest button is clicked
+    public void ChestButtonClickedOn()
     {
-        PlayerService.Instance.DecrementGems(currentState.GetRequiredGemsToUnlock());
+        if (!View.gameObject.activeSelf) return;
 
-        currentState.OnStateDisable();
-        currentState = chestUnlocked;
-        currentState.OnStateEnable();
-
-        AudioService.Instance.PlaySound(SoundType.UnlockNow);
+        currentState.ChestButtonClickedOn();
     }
 
+    // get called when Start Unlocking button is clicked
     public void StartUnlocking()
     {
-        currentState.OnStateDisable();
-        currentState = chestUnlocking;
-        currentState.OnStateEnable();
+        if (!View.gameObject.activeSelf) return;
 
-        AudioService.Instance.PlaySound(SoundType.StartUnlocking);
+        currentState.OnStateExit(); 
+        currentState = chestUnlocking;
+        currentState.OnStateEnter();
+    }
+
+    // get called when Unlock Now button is clicked
+    public void UnlockNow()
+    {
+        if (!View.gameObject.activeSelf) return;
+
+        currentState.OnStateExit();
+        currentState = chestUnlocked;
+        currentState.OnStateEnter();
+
+        SlotService.Instance.StartNextChestUnlocking();
+    }
+
+    public void RemoveChestFromSlot()
+    {
+        if (View != null)
+        {
+            chestSlot.IsEmpty = true;
+            View.RemoveChest();
+            View = null;
+        }
+    }
+
+    public void EnableChest()
+    {
+        View.EnableChest();
+    }
+
+    public void DisableChest()
+    {
+        View.DisableChest();
     }
 }

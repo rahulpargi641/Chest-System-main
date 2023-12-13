@@ -1,7 +1,10 @@
 
 
-public class PlayerService : MonoSingletonGeneric<PlayerService>
+public class CurrencyService : MonoSingletonGeneric<CurrencyService>
 {
+    public int GetGemsInAccount() => gemsInAccount;
+    public int GetCoinsInAccount() => coinsInAccount;
+
     private int gemsInAccount;
     private int coinsInAccount;
 
@@ -11,29 +14,27 @@ public class PlayerService : MonoSingletonGeneric<PlayerService>
         coinsInAccount = 100;
     }
 
-    public int GetGemsInAccount() => gemsInAccount;
-    public int GetCoinsInAccount() => coinsInAccount;
     public void IncrementGems(int gems)
     {
         gemsInAccount += gems;
-        UIService.Instance.RefreshPlayerStats();
+        UIService.Instance.SetCurrencyStats();
     }
 
     public void DecrementGems(int gems)
     {
         gemsInAccount -= gems;
-        UIService.Instance.RefreshPlayerStats();
+        UIService.Instance.SetCurrencyStats();
     }
 
     public void IncrementCoins(int coins)
     {
         coinsInAccount += coins;
-        UIService.Instance.RefreshPlayerStats();
+        UIService.Instance.SetCurrencyStats();
     }
 
     public void DecrementCoins(int coins)
     {
         coinsInAccount -= coins;
-        UIService.Instance.RefreshPlayerStats();
+        UIService.Instance.SetCurrencyStats();
     }
 }

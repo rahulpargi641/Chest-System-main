@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5453f9ae6db92724b863e7b86df6e6ca, type: 3}
+  m_Name: SuperMagicalChest
+  m_EditorClassIdentifier: 
+  <ChestType>k__BackingField: 3
+  <ChestClosedImage>k__BackingField: {fileID: 21300000, guid: 8429ed4fcfb8c9b4e9a2523ae2789e00, type: 3}
+  <ChestOpenImage>k__BackingField: {fileID: 21300000, guid: 1b0e1eff837943d48bef4da942a4b8d4, type: 3}
+  <ChestFindingProbability>k__BackingField: 50
+  <UnlockDurationMinutes>k__BackingField: 1
+  <TimeReductionByGemSeconds>k__BackingField: 600
+  <CoinsMin>k__BackingField: 20
+  <CoinsMax>k__BackingField: 40
+  <GemsMin>k__BackingField: 15
+  <GemsMax>k__BackingField: 20

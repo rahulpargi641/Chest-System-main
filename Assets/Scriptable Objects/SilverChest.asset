@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5453f9ae6db92724b863e7b86df6e6ca, type: 3}
+  m_Name: SilverChest
+  m_EditorClassIdentifier: 
+  <ChestType>k__BackingField: 0
+  <ChestClosedImage>k__BackingField: {fileID: 21300000, guid: 411b6f4481886834cbbdf42d52dbcad3, type: 3}
+  <ChestOpenImage>k__BackingField: {fileID: 21300000, guid: 53fcf2f11a19a0c44917220e2adb899b, type: 3}
+  <ChestFindingProbability>k__BackingField: 80
+  <UnlockDurationMinutes>k__BackingField: 1
+  <TimeReductionByGemSeconds>k__BackingField: 600
+  <CoinsMin>k__BackingField: 5
+  <CoinsMax>k__BackingField: 10
+  <GemsMin>k__BackingField: 1
+  <GemsMax>k__BackingField: 5

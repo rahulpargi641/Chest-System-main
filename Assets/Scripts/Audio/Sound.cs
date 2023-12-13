@@ -61,8 +61,8 @@ public enum SoundType
     BgMusic,
     ButtonClick,
     ButtonClose,
-    OpenChest,
-    UnlockNow,
+    ChestClickedOn,
+    Unlocked,
     StartUnlocking,
-    GiftReceived,
+    RewardsReceived,
 }
