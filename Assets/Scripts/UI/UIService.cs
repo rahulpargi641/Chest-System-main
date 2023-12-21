@@ -111,4 +111,27 @@ public class UIService : MonoSingletonGeneric<UIService>
 
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
+
+    public void EnableUnlockNowButton(Vector2 unlockButtonInitialPos, int gemsToUnlock)
+    {
+        unlockNowButtonRectTransform.anchoredPosition = unlockButtonInitialPos;
+        unlockNowText.text = "Unlock Now: " + gemsToUnlock.ToString();
+        unlockNowButton.gameObject.SetActive(true);
+    }
+
+    public void EnableStartUnlockingButton()
+    {
+        startUnlockingButton.gameObject.SetActive(true);
+    }
+
+    public void DisableStartUnlockingButton()
+    {
+        unlockNowButtonRectTransform.anchoredPosition = new Vector2(0,0); // Start Unlocking button doesn't get enabled
+    }
+
+    public void AddButtonsListeners(ChestController controller)
+    {
+        unlockNowButton.onClick.AddListener(controller.UnlockNow);
+        startUnlockingButton.onClick.AddListener(controller.StartUnlocking);
+    }
 }

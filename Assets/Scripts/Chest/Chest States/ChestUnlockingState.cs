@@ -28,7 +28,7 @@ public class ChestUnlockingState : IChestState
         timeLeftUntilUnlockSeconds = controller.Model.UnlockDurationMinutes * 60;
     }
 
-    public void OnStateEnter()
+    public void OnEnter()
     {
         UpdateCurrentStateText();
 

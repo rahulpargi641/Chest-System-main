@@ -34,7 +34,7 @@ public class ChestController
     private void SetCurrentState()
     {
         currentState = chestLocked;
-        currentState.OnStateEnter();
+        currentState.OnEnter();
     }
 
     public void SetupChest(ChestSlot chestSlot, Transform chestParentTransform)
@@ -60,7 +60,7 @@ public class ChestController
 
         currentState.OnStateExit(); 
         currentState = chestUnlocking;
-        currentState.OnStateEnter();
+        currentState.OnEnter();
     }
 
     // get called when Unlock Now button is clicked
@@ -70,7 +70,7 @@ public class ChestController
 
         currentState.OnStateExit();
         currentState = chestUnlocked;
-        currentState.OnStateEnter();
+        currentState.OnEnter();
 
         SlotService.Instance.StartNextChestUnlocking();
     }

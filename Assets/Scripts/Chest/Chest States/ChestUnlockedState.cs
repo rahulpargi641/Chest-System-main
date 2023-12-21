@@ -18,7 +18,7 @@ public class ChestUnlockedState : IChestState
         rewardGemText = UIService.Instance.RewardGemText;
     }
 
-    public void OnStateEnter()
+    public void OnEnter()
     {
         UpdateChestVisualAndChestInfoTexts();
 
