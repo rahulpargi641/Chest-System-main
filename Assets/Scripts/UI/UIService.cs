@@ -36,24 +36,33 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     private void Start()
     {
-        rayCastBlocker.SetActive(false);
+        InitializeUI();
+        SetupButtonListeners();
+        PlayBackgroundMusic();
+    }
 
+    private void InitializeUI()
+    {
+        rayCastBlocker.SetActive(false);
         chestPopUp.SetActive(false);
         chestSlotsFullPopUp.SetActive(false);
-
         unlockNowButton.gameObject.SetActive(false);
         startUnlockingButton.gameObject.SetActive(false);
+        rewardMessage.gameObject.SetActive(false);
 
         unlockNowButtonInitialPos = unlockNowButtonRectTransform.anchoredPosition;
-
-        rewardMessage.gameObject.SetActive(false);
         SetCurrencyStats();
+    }
 
+    private void SetupButtonListeners()
+    {
         createChestButton.onClick.AddListener(CreateChest);
         closeChestSlotsFullButton.onClick.AddListener(DisableSlotsFullPopUp);
-
         closeChestPopUpButton.onClick.AddListener(DisableChestPopUp);
+    }
 
+    private void PlayBackgroundMusic()
+    {
         AudioService.Instance.PlaySound(SoundType.BgMusic);
     }
 
@@ -78,17 +87,14 @@ public class UIService : MonoSingletonGeneric<UIService>
     {
         rayCastBlocker.SetActive(false);
         chestPopUp.SetActive(false);
-
         unlockNowButton.gameObject.SetActive(false);
         startUnlockingButton.gameObject.SetActive(false);
-
         rewardMessage.gameObject.SetActive(false);
-
-        EventService.Instance.InvokeOnRewardCollected();
 
         unlockNowButton.onClick.RemoveAllListeners();
         startUnlockingButton.onClick.RemoveAllListeners();
 
+        EventService.Instance.InvokeOnRewardCollected();
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 
@@ -102,24 +108,26 @@ public class UIService : MonoSingletonGeneric<UIService>
     {
         rayCastBlocker.SetActive(false);
         chestSlotsFullPopUp.SetActive(false);
-
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 
-    public void SetupAndEnableUnlockNowButton(int gemsToUnlock) // called when chest is in locked state
+    public void SetupAndEnableUnlockNowButton(int gemsToUnlock)
     {
-        unlockNowButtonRectTransform.anchoredPosition = unlockNowButtonInitialPos;
-        unlockNowText.text = "Unlock Now: " + gemsToUnlock.ToString();
+        SetupUnlockNowButton(unlockNowButtonInitialPos, gemsToUnlock);
         unlockNowButton.gameObject.SetActive(true);
-
     }
 
-    // brings the Unlock Now button to centre of the popup
-    public void SetupAndEnableUnlockNowButton(Vector2 newPos, int gemsToUnlock) // called when chest is in unlocking state
+    // brings the Unlock Now button to centre of the chest popup
+    public void SetupAndEnableUnlockNowButton(Vector2 newPos, int gemsToUnlock) // called when chest is in Locked state
+    {
+        SetupUnlockNowButton(newPos, gemsToUnlock);
+        unlockNowButton.gameObject.SetActive(true);
+    }
+
+    private void SetupUnlockNowButton(Vector2 newPos, int gemsToUnlock) // called when chest is in Unlocking state
     {
         unlockNowButtonRectTransform.anchoredPosition = newPos;
-        unlockNowText.text = "Unlock Now: " + gemsToUnlock.ToString();
-        unlockNowButton.gameObject.SetActive(true);
+        unlockNowText.text = $"Unlock Now: {gemsToUnlock}";
     }
 
     public void EnableStartUnlockingButton()
@@ -129,24 +137,23 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     public void DisableStartUnlockingButton()
     {
-        unlockNowButtonRectTransform.anchoredPosition = new Vector2(0,0); // Start Unlocking button doesn't get enabled
+        unlockNowButtonRectTransform.anchoredPosition = Vector2.zero;
     }
 
     public void AddButtonsListeners(ChestController controller)
     {
         unlockNowButton.onClick.AddListener(controller.UnlockChest);
 
-        if (controller.CurrentState != EChestState.LOCKED) return;
-
-        startUnlockingButton.onClick.AddListener(controller.StartUnlocking);
+        if (controller.CurrentState == EChestState.LOCKED)
+            startUnlockingButton.onClick.AddListener(controller.StartUnlocking);
     }
 
     public void UpdateRewardMessageAndEnable(int receivedGems, int receivedCoins)
     {
         rewardMessage.text = "Congrats!!";
-        rewardGemText.text = "You got  " + receivedGems.ToString();
-        rewardCoinText.text = "You got  " + receivedCoins.ToString();
+        rewardGemText.text = $"You got {receivedGems}";
+        rewardCoinText.text = $"You got {receivedCoins}";
 
-        rewardMessage.gameObject.SetActive(true); // enables the background for the reward texts
+        rewardMessage.gameObject.SetActive(true);
     }
 }

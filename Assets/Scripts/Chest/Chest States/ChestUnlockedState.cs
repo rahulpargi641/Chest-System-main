@@ -52,7 +52,7 @@ public class ChestUnlockedState : IChestState
 
     private void SetupChestPopup()
     {
-        CurrencyService.Instance.IncrementCoins(rewardCoins); // Use Events Reward Collected
+        CurrencyService.Instance.IncrementCoins(rewardCoins); // Use Events Reward Collected, it should not be in chest popup setup
         CurrencyService.Instance.IncrementGems(rewardGems); // Use Events Reward Collected
 
         UIService.Instance.UpdateRewardMessageAndEnable(rewardGems, rewardCoins);
