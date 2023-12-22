@@ -1,117 +1,96 @@
 using System;
-using System.Collections;
-using TMPro;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ChestUnlockingState : IChestState
 {
-    private ChestController controller;
+    public EChestState ChestState => EChestState.UNLOCKING;
 
-    private Button unlockNowButton;
-    private RectTransform unlockButtonRectTransform;
-    private TextMeshProUGUI unlockNowText;
+    private readonly string currentStateName = "Unlocking";
+    private int timeLeftUntilUnlock;
+    private readonly Vector2 chestPopupCenterPos = new Vector2(0, 0);
+    private CancellationTokenSource cancellationTokenSource;
 
-    private int timeLeftUntilUnlockSeconds; 
-
-    private Vector2 centerOfChestPopUp = new Vector2(0, 0);
-    private Coroutine unlockingCoroutine;
+    private readonly ChestController controller;
 
     public ChestUnlockingState(ChestController controller)
     {
         this.controller = controller;
-
-        unlockNowButton = UIService.Instance.UnlockNowButton;
-        unlockButtonRectTransform = UIService.Instance.UnlockNowButtonRectTransform;
-        unlockNowText = UIService.Instance.UnlockNowText;
-
-        timeLeftUntilUnlockSeconds = controller.Model.UnlockDurationMinutes * 60;
+        timeLeftUntilUnlock = controller.UnlockDurationMinutes * 60;
     }
 
-    public void OnEnter()
+    public async void OnEnter()
     {
-        UpdateCurrentStateText();
+        controller.UpdateCurrentStateText(currentStateName); 
 
-        unlockingCoroutine = controller.View.StartCoroutine(ChestUnlockTimer()); // Start Unlock Timer Coroutine
+        await StartChestUnlockingTimer();
 
+        controller.UnlockChest();
         AudioService.Instance.PlaySound(SoundType.StartUnlocking);
     }
 
-    private void UpdateCurrentStateText()
+    public void OnChestClicked()
     {
-        controller.View.CurrentChestStateText.text = "Unlocking";
-    }
-
-    // get called when Chest is clicked on 
-    public void ChestButtonClickedOn()
-    {
-        ChestPopupSetup();
+        SetupChestPopup();
         UIService.Instance.EnableChestPopUp();
-
         AudioService.Instance.PlaySound(SoundType.ChestClickedOn);
     }
 
-    private void ChestPopupSetup()
+    public void OnExit()
     {
-        EnableUnlockNowButton();
-        unlockNowText.text = "Unlock Now: " + GetRequiredGemsToUnlock().ToString();
-        unlockNowButton.onClick.AddListener(controller.UnlockNow);
-    }
-
-    public void OnStateExit()
-    {
-        StopChestUnlockTimerCoroutine();
-
+        StopChestUnlockingTimer();
         UIService.Instance.DisableChestPopUp();
+        CurrencyService.Instance.DecrementGems(GetGemsToUnlock()); // Use events
+        AudioService.Instance.PlaySound(SoundType.Unlocked);
     }
 
-    private void StopChestUnlockTimerCoroutine()
+    private async Task StartChestUnlockingTimer()
     {
-        if (unlockingCoroutine != null)
+        cancellationTokenSource = new CancellationTokenSource();
+        try
         {
-            controller.View.StopCoroutine(unlockingCoroutine);
-            unlockingCoroutine = null;  // Reset the coroutine reference
-            Debug.Log("Timer Coroutine stopped");
+            await ChestUnlockingTimer(cancellationTokenSource.Token);
+        }
+        catch (TaskCanceledException)
+        {
+            Debug.Log("Task was canceled");
         }
     }
 
-    // brings the Unlock Now button to centre of the popup
-    private void EnableUnlockNowButton()
+    private async Task ChestUnlockingTimer(CancellationToken cancellationToken)
     {
-        unlockButtonRectTransform.anchoredPosition = centerOfChestPopUp;
-        unlockNowButton.gameObject.SetActive(true);
-    }
-
-    public IEnumerator ChestUnlockTimer()
-    {
-        Debug.Log("Coroutine Started");
-
-        while (timeLeftUntilUnlockSeconds >= 0)
+        while (timeLeftUntilUnlock >= 0)
         {
-            UpdateTimeLeftText();
+            //cancellationToken.ThrowIfCancellationRequested(); -> Check for cancellation before the delay
+            if (cancellationToken.IsCancellationRequested) return;
 
-            yield return new WaitForSeconds(1);
-            timeLeftUntilUnlockSeconds--;
+            UpdateTimerText();
+
+            await Task.Delay(1000, cancellationToken);
+            timeLeftUntilUnlock--;
         }
-
-        controller.UnlockNow();
     }
 
-    private void UpdateTimeLeftText()
+    private void UpdateTimerText()
     {
-        TimeSpan timeSpan = TimeSpan.FromSeconds(timeLeftUntilUnlockSeconds);
+        TimeSpan timeSpan = TimeSpan.FromSeconds(timeLeftUntilUnlock);
         string timeString = timeSpan.ToString(@"hh\:mm\:ss");
 
-        UpdateTimeLeftUntilUpdateText(timeString);
+        controller.UpdateTimeLeftUntilUnlockText(timeString);
     }
 
-    private void UpdateTimeLeftUntilUpdateText(string timeString)
+    private void StopChestUnlockingTimer()
     {
-        controller.View.TimeLeftUntilUnlockText.text = timeString;
+        cancellationTokenSource?.Cancel();
     }
 
-    public int GetRequiredGemsToUnlock() =>
-        Mathf.CeilToInt(timeLeftUntilUnlockSeconds / controller.Model.TimeReductionByGemSeconds);
+    private void SetupChestPopup()
+    {
+        UIService.Instance.SetupAndEnableUnlockNowButton(chestPopupCenterPos, GetGemsToUnlock());
+        UIService.Instance.AddButtonsListeners(controller);
+    }
 
-    public EChestState GetChestState() => EChestState.UNLOCKING;
+    public int GetGemsToUnlock() =>
+        Mathf.CeilToInt(timeLeftUntilUnlock / controller.TimeReductionByGemSeconds);
 }

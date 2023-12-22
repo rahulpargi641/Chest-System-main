@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class ChestView : MonoBehaviour
 {
-    public TextMeshProUGUI CurrentChestStateText => currentChestStateText;
-    public TextMeshProUGUI TimeLeftUntilUnlockText => timeLeftUntilUnlockText;
-    public Image ChestImage => chestImage;
+    //public TextMeshProUGUI CurrentChestStateText => currentChestStateText;
+    //public TextMeshProUGUI TimeLeftUntilUnlockText => timeLeftUntilUnlockText;
+    //public Image ChestImage => chestImage;
     public ChestController Controller { private get; set; }
     public EChestState CurrentState => Controller.CurrentState;
 
@@ -51,5 +51,20 @@ public class ChestView : MonoBehaviour
     public void DisableChest()
     {
         gameObject.SetActive(false);
+    }
+
+    public void UpdateChestImage(Sprite image)
+    {
+        chestImage.sprite = image;
+    }
+
+    public void UpdateChestStateText(string currentStateName)
+    {
+        currentChestStateText.text = currentStateName;
+    }
+
+    public void UpdateTimeLeftUntilUnlockText(string timeLeftUntilUnlock)
+    {
+        timeLeftUntilUnlockText.text = timeLeftUntilUnlock;
     }
 }

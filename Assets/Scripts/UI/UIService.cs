@@ -5,16 +5,6 @@ using UnityEngine.UI;
 
 public class UIService : MonoSingletonGeneric<UIService>
 {
-    public static event Action OnRewardCollected;
-    public Button StartUnlockingButton => startUnlockingButton;
-    public Button UnlockNowButton => unlockNowButton;
-    public RectTransform UnlockNowButtonRectTransform => unlockNowButtonRectTransform;
-    public TextMeshProUGUI UnlockNowText => unlockNowText;
-    public Vector2 UnlockNowButtonInitialPos { get; private set; }
-    public TextMeshProUGUI RewardMessage => rewardMessage;
-    public TextMeshProUGUI RewardCoinText => rewardCoinText;
-    public TextMeshProUGUI RewardGemText => rewardGemText;
-
     [Header("Raycast Blocker")]
     [SerializeField] private GameObject rayCastBlocker;
 
@@ -42,6 +32,8 @@ public class UIService : MonoSingletonGeneric<UIService>
     [SerializeField] private TextMeshProUGUI coins;
     [SerializeField] private TextMeshProUGUI gems;
 
+    private Vector2 unlockNowButtonInitialPos;
+
     private void Start()
     {
         rayCastBlocker.SetActive(false);
@@ -51,13 +43,15 @@ public class UIService : MonoSingletonGeneric<UIService>
 
         unlockNowButton.gameObject.SetActive(false);
         startUnlockingButton.gameObject.SetActive(false);
-        UnlockNowButtonInitialPos = unlockNowButtonRectTransform.anchoredPosition;
+
+        unlockNowButtonInitialPos = unlockNowButtonRectTransform.anchoredPosition;
 
         rewardMessage.gameObject.SetActive(false);
         SetCurrencyStats();
 
         createChestButton.onClick.AddListener(CreateChest);
         closeChestSlotsFullButton.onClick.AddListener(DisableSlotsFullPopUp);
+
         closeChestPopUpButton.onClick.AddListener(DisableChestPopUp);
 
         AudioService.Instance.PlaySound(SoundType.BgMusic);
@@ -90,7 +84,7 @@ public class UIService : MonoSingletonGeneric<UIService>
 
         rewardMessage.gameObject.SetActive(false);
 
-        OnRewardCollected?.Invoke();
+        EventService.Instance.InvokeOnRewardCollected();
 
         unlockNowButton.onClick.RemoveAllListeners();
         startUnlockingButton.onClick.RemoveAllListeners();
@@ -112,9 +106,18 @@ public class UIService : MonoSingletonGeneric<UIService>
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 
-    public void EnableUnlockNowButton(Vector2 unlockButtonInitialPos, int gemsToUnlock)
+    public void SetupAndEnableUnlockNowButton(int gemsToUnlock) // called when chest is in locked state
     {
-        unlockNowButtonRectTransform.anchoredPosition = unlockButtonInitialPos;
+        unlockNowButtonRectTransform.anchoredPosition = unlockNowButtonInitialPos;
+        unlockNowText.text = "Unlock Now: " + gemsToUnlock.ToString();
+        unlockNowButton.gameObject.SetActive(true);
+
+    }
+
+    // brings the Unlock Now button to centre of the popup
+    public void SetupAndEnableUnlockNowButton(Vector2 newPos, int gemsToUnlock) // called when chest is in unlocking state
+    {
+        unlockNowButtonRectTransform.anchoredPosition = newPos;
         unlockNowText.text = "Unlock Now: " + gemsToUnlock.ToString();
         unlockNowButton.gameObject.SetActive(true);
     }
@@ -131,7 +134,19 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     public void AddButtonsListeners(ChestController controller)
     {
-        unlockNowButton.onClick.AddListener(controller.UnlockNow);
+        unlockNowButton.onClick.AddListener(controller.UnlockChest);
+
+        if (controller.CurrentState != EChestState.LOCKED) return;
+
         startUnlockingButton.onClick.AddListener(controller.StartUnlocking);
+    }
+
+    public void UpdateRewardMessageAndEnable(int receivedGems, int receivedCoins)
+    {
+        rewardMessage.text = "Congrats!!";
+        rewardGemText.text = "You got  " + receivedGems.ToString();
+        rewardCoinText.text = "You got  " + receivedCoins.ToString();
+
+        rewardMessage.gameObject.SetActive(true); // enables the background for the reward texts
     }
 }

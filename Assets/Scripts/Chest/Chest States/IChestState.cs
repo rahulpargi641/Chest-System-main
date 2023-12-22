@@ -1,9 +1,9 @@
 
 public interface IChestState
 {
+    EChestState ChestState { get; }
+
     public void OnEnter();
-    public void OnStateExit();
-    public void ChestButtonClickedOn();
-    public int GetRequiredGemsToUnlock();
-    public EChestState GetChestState(); 
+    public void OnExit();
+    public void OnChestClicked();
 }

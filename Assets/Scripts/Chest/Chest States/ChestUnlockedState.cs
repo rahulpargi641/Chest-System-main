@@ -1,95 +1,71 @@
-using TMPro;
 using UnityEngine;
 
 public class ChestUnlockedState : IChestState
 {
-    private ChestController controller;
+    public EChestState ChestState => EChestState.UNLOCKED;
 
-    private TextMeshProUGUI rewardMessage;
-    private TextMeshProUGUI rewardCoinText;
-    private TextMeshProUGUI rewardGemText;
+    private int rewardCoins;
+    private int rewardGems;
+    private readonly string currentStateName = "Unlocked";
+    private readonly string timeLeftUntilUnlock = "Open"; // chest is opened in the unlocked state
+
+    private ChestController controller;
 
     public ChestUnlockedState(ChestController controller)
     {
         this.controller = controller;
-
-        rewardMessage = UIService.Instance.RewardMessage;
-        rewardCoinText = UIService.Instance.RewardCoinText;
-        rewardGemText = UIService.Instance.RewardGemText;
     }
 
     public void OnEnter()
     {
-        UpdateChestVisualAndChestInfoTexts();
-
-        CurrencyService.Instance.DecrementGems(GetRequiredGemsToUnlock());
-
-        AudioService.Instance.PlaySound(SoundType.Unlocked);
+        UpdateChestImageAndChestInfoTexts();
+        GenerateRandomRewards();
     }
 
-    private void UpdateChestVisualAndChestInfoTexts()
+    public void OnChestClicked()
     {
-        controller.View.ChestImage.sprite = controller.Model.ChestOpenImage; // updates chest visual
+        EventService.OnRewardCollected += RemoveChestFromSlot; // When reward message Popup gets closed, this event will be invoked
+
+        SetupChestPopup();
+        UIService.Instance.EnableChestPopUp();
+        AudioService.Instance.PlaySound(SoundType.RewardsReceived);
+    }
+
+    public void OnExit()
+    {
+        EventService.OnRewardCollected -= RemoveChestFromSlot;
+
+        UIService.Instance.DisableChestPopUp();
+    }
+
+    private void UpdateChestImageAndChestInfoTexts()
+    {
+        controller.UpdateChestImage();
         UpdateChestInfoTexts();
     }
 
     private void UpdateChestInfoTexts() // Updates Current Chest State and Time remaining until unlock text 
     {
-        controller.View.CurrentChestStateText.text = "Unlocked";
-        controller.View.TimeLeftUntilUnlockText.text = "OPEN";
+        controller.UpdateCurrentStateText(currentStateName);
+        controller.UpdateTimeLeftUntilUnlockText(timeLeftUntilUnlock);
     }
 
-    // get called when Chest is clicked on 
-    public void ChestButtonClickedOn()
+    private void SetupChestPopup()
     {
-        UIService.OnRewardCollected += RemoveChestFromSlot; // When reward message Popup gets closed, this event will be invoked
+        CurrencyService.Instance.IncrementCoins(rewardCoins); // Use Events Reward Collected
+        CurrencyService.Instance.IncrementGems(rewardGems); // Use Events Reward Collected
 
-        ChestPopSetup();
-        UIService.Instance.EnableChestPopUp();
-
-        AudioService.Instance.PlaySound(SoundType.RewardsReceived);
+        UIService.Instance.UpdateRewardMessageAndEnable(rewardGems, rewardCoins);
     }
 
-    private void ChestPopSetup()
+    private void GenerateRandomRewards()
     {
-        rewardMessage.gameObject.SetActive(true); // enables the background for the reward texts
-        SetRewardsTexts();
-    }
-
-    public void OnStateExit()
-    {
-        UIService.OnRewardCollected -= RemoveChestFromSlot;
-
-        UIService.Instance.DisableChestPopUp();
-    }
-
-  
-    private void SetRewardsTexts()
-    {
-        int coinsMin = controller.Model.CoinsMin;
-        int coinsMax = controller.Model.CoinsMax;
-        int gemsMin = controller.Model.GemsMin;
-        int gemsMax = controller.Model.GemsMax;
-
-        int rewardCoins = Random.Range(coinsMin, coinsMax + 1);
-        int rewardGems = Random.Range(gemsMin, gemsMax + 1);
-
-        rewardMessage.text = "Congrats!!";
-        rewardCoinText.text = "You got  " + rewardCoins.ToString();
-        rewardGemText.text = "You got  " + rewardGems.ToString();
-
-        CurrencyService.Instance.IncrementCoins(rewardCoins);
-        CurrencyService.Instance.IncrementGems(rewardGems);
+        rewardCoins = controller.GenerateRewardCoins();
+        rewardGems = controller.GenerateRewardGems();
     }
 
     private void RemoveChestFromSlot()
     {
         controller.RemoveChestFromSlot();
     }
-
-    public int GetRequiredGemsToUnlock() => 
-        Mathf.CeilToInt(controller.Model.UnlockDurationMinutes * 60 / controller.Model.TimeReductionByGemSeconds);
-
-
-    public EChestState GetChestState() => EChestState.UNLOCKED;
 }
