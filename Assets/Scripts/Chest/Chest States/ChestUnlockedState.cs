@@ -24,16 +24,18 @@ public class ChestUnlockedState : IChestState
 
     public void OnChestClicked()
     {
-        EventService.OnRewardCollected += RemoveChestFromSlot; // When reward message Popup gets closed, this event will be invoked
+        EventService.onRewardCollected += RemoveChestFromSlot; // When reward message Popup gets closed, this event will be invoked
 
         SetupChestPopup();
         UIService.Instance.EnableChestPopUp();
+
+        EventService.Instance.InvokeOnChestOpened(rewardGems, rewardCoins);
         AudioService.Instance.PlaySound(SoundType.RewardsReceived);
     }
 
     public void OnExit()
     {
-        EventService.OnRewardCollected -= RemoveChestFromSlot;
+        EventService.onRewardCollected -= RemoveChestFromSlot;
 
         UIService.Instance.DisableChestPopUp();
     }
@@ -51,10 +53,7 @@ public class ChestUnlockedState : IChestState
     }
 
     private void SetupChestPopup()
-    {
-        CurrencyService.Instance.IncrementCoins(rewardCoins); // Use Events Reward Collected, it should not be in chest popup setup
-        CurrencyService.Instance.IncrementGems(rewardGems); // Use Events Reward Collected
-
+    { 
         UIService.Instance.UpdateRewardMessageAndEnable(rewardGems, rewardCoins);
     }
 

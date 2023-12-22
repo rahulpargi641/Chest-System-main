@@ -33,7 +33,7 @@ public class ChestLockedState : IChestState
     public void OnExit()
     {
         UIService.Instance.DisableChestPopUp();
-        CurrencyService.Instance.DecrementGems(gemsToUnlock); // Use event
+        EventService.Instance.InvokeOnGemsUsed(gemsToUnlock);
     }
 
     private void UpdateChestImageAndInfoTexts()

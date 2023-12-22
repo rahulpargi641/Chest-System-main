@@ -41,7 +41,8 @@ public class ChestUnlockingState : IChestState
     {
         StopChestUnlockingTimer();
         UIService.Instance.DisableChestPopUp();
-        CurrencyService.Instance.DecrementGems(GetGemsToUnlock()); // Use events
+
+        EventService.Instance.InvokeOnGemsUsed(GetGemsToUnlock());
         AudioService.Instance.PlaySound(SoundType.Unlocked);
     }
 

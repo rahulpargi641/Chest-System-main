@@ -73,8 +73,8 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     public void SetCurrencyStats()
     {
-        coins.text = CurrencyService.Instance.GetCoinsInAccount().ToString();
-        gems.text = CurrencyService.Instance.GetGemsInAccount().ToString();
+        gems.text = PlayerCurrencyService.Instance.GemsInAccount.ToString();
+        coins.text = PlayerCurrencyService.Instance.CoinsInAccount.ToString();
     }
 
     public void EnableChestPopUp()
