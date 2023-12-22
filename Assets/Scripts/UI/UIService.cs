@@ -111,20 +111,20 @@ public class UIService : MonoSingletonGeneric<UIService>
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 
-    public void SetupAndEnableUnlockNowButton(int gemsToUnlock)
+    public void SetupAndEnableUnlockNowButton(int gemsToUnlock) // called when chest is in Locked state
     {
         SetupUnlockNowButton(unlockNowButtonInitialPos, gemsToUnlock);
         unlockNowButton.gameObject.SetActive(true);
     }
 
     // brings the Unlock Now button to centre of the chest popup
-    public void SetupAndEnableUnlockNowButton(Vector2 newPos, int gemsToUnlock) // called when chest is in Locked state
+    public void SetupAndEnableUnlockNowButton(Vector2 chestPopupCenterPos, int gemsToUnlock) // called when chest is in Unlocking state, UnlockNow button will be in the center of chest popup
     {
-        SetupUnlockNowButton(newPos, gemsToUnlock);
+        SetupUnlockNowButton(chestPopupCenterPos, gemsToUnlock);
         unlockNowButton.gameObject.SetActive(true);
     }
 
-    private void SetupUnlockNowButton(Vector2 newPos, int gemsToUnlock) // called when chest is in Unlocking state
+    private void SetupUnlockNowButton(Vector2 newPos, int gemsToUnlock) 
     {
         unlockNowButtonRectTransform.anchoredPosition = newPos;
         unlockNowText.text = $"Unlock Now: {gemsToUnlock}";
@@ -142,7 +142,7 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     public void AddButtonsListeners(ChestController controller)
     {
-        unlockNowButton.onClick.AddListener(controller.UnlockChest);
+        unlockNowButton.onClick.AddListener(controller.UnlockChestNow);
 
         if (controller.CurrentState == EChestState.LOCKED)
             startUnlockingButton.onClick.AddListener(controller.StartUnlocking);

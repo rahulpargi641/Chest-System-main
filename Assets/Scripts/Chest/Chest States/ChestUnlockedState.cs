@@ -3,6 +3,7 @@ using UnityEngine;
 public class ChestUnlockedState : IChestState
 {
     public EChestState ChestState => EChestState.UNLOCKED;
+    public int GemsToUnlock => 0;
 
     private int rewardCoins;
     private int rewardGems;
@@ -29,7 +30,7 @@ public class ChestUnlockedState : IChestState
         SetupChestPopup();
         UIService.Instance.EnableChestPopUp();
 
-        EventService.Instance.InvokeOnChestOpened(rewardGems, rewardCoins);
+        EventService.Instance.InvokeOnChestUnlocked(rewardGems, rewardCoins);
         AudioService.Instance.PlaySound(SoundType.RewardsReceived);
     }
 

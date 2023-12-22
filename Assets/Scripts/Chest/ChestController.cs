@@ -48,35 +48,35 @@ public class ChestController
         view.AddChestButtonListener();
     }
 
-    // get called when OpenChest button is clicked
-    public void ChestButtonClickedOn()
+    // gets called when Chest is clicked on
+    public void ChestClickedOn()
     {
         if (!view.gameObject.activeSelf) return;
 
         currentState.OnChestClicked();
     }
 
-    // get called when Start Unlocking button is clicked
+    // gets called when Start Unlocking button is clicked
     public void StartUnlocking()
     {
-        if (!view.gameObject.activeSelf) return;
-
-        currentState.OnExit(); 
-        currentState = chestUnlocking;
-        currentState.OnEnter();
+        SwitchState(chestUnlocking);
     }
 
-    // get called when Unlock Now button is clicked
-    public void UnlockChest()
+    // gets called when Unlock Now button is clicked or Unlock Timer gets expired
+    public void UnlockChestNow()
+    {
+        EventService.Instance.InvokeOnGemsUsed(currentState.GemsToUnlock);
+        SwitchState(chestUnlocked);
+        SlotService.Instance.StartNextChestUnlocking();
+    }
+
+    private void SwitchState(IChestState newState)
     {
         if (!view.gameObject.activeSelf) return;
 
         currentState.OnExit();
-        currentState = chestUnlocked;
+        currentState = newState;
         currentState.OnEnter();
-
-        // add event that unlock now button is clicked and decrese the gems
-        SlotService.Instance.StartNextChestUnlocking();
     }
 
     public void RemoveChestFromSlot()
@@ -117,7 +117,7 @@ public class ChestController
         view.UpdateTimeLeftUntilUnlockText(timeLeftUntilUnlock);
     }
 
-    public int GenerateRewardCoins() // Generate from currency service
+    public int GenerateRewardCoins() // Based on chest type
     {
         int coinsMin = model.CoinsMin;
         int coinsMax = model.CoinsMax;
@@ -125,7 +125,7 @@ public class ChestController
         return UnityEngine.Random.Range(coinsMin, coinsMax + 1);
     }
 
-    public int GenerateRewardGems() // Generate from currency service
+    public int GenerateRewardGems() // Based on chest type
     {
         int gemsMin = model.GemsMin;
         int gemsMax = model.GemsMax;

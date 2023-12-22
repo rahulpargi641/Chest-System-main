@@ -3,9 +3,10 @@ using UnityEngine;
 public class ChestLockedState : IChestState
 {
     public EChestState ChestState => EChestState.LOCKED;
+    public int GemsToUnlock => gemsToUnlock;
 
     private readonly string currentStateName = "Locked";
-    private readonly int unlockDurationMinutes; // in minutes
+    private readonly int unlockDurationMinutes; 
     private readonly int gemsToUnlock;
 
     private ChestController controller;
@@ -33,7 +34,6 @@ public class ChestLockedState : IChestState
     public void OnExit()
     {
         UIService.Instance.DisableChestPopUp();
-        EventService.Instance.InvokeOnGemsUsed(gemsToUnlock);
     }
 
     private void UpdateChestImageAndInfoTexts()

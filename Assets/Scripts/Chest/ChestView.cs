@@ -1,17 +1,11 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChestView : MonoBehaviour
 {
-    //public TextMeshProUGUI CurrentChestStateText => currentChestStateText;
-    //public TextMeshProUGUI TimeLeftUntilUnlockText => timeLeftUntilUnlockText;
-    //public Image ChestImage => chestImage;
-    public ChestController Controller { private get; set; }
     public EChestState CurrentState => Controller.CurrentState;
-
-    public static event Action<ChestView> OnChestOpened;
+    public ChestController Controller { private get; set; }
 
     [SerializeField] private RectTransform chestRectTransform;
     [SerializeField] private Image chestImage;
@@ -27,30 +21,12 @@ public class ChestView : MonoBehaviour
 
     public void AddChestButtonListener()
     {
-        chestButton.onClick.AddListener(Controller.ChestButtonClickedOn);
-    }
-
-    public void RemoveChest()
-    {
-        Controller = null;
-        chestButton.onClick.RemoveAllListeners();
-
-        OnChestOpened?.Invoke(this); // sends back to pool
+        chestButton.onClick.AddListener(Controller.ChestClickedOn);
     }
 
     public void StartUnlocking()
     {
         Controller.StartUnlocking();
-    }
-
-    public void EnableChest()
-    {
-        gameObject.SetActive(true);
-    }
-
-    public void DisableChest()
-    {
-        gameObject.SetActive(false);
     }
 
     public void UpdateChestImage(Sprite image)
@@ -66,5 +42,23 @@ public class ChestView : MonoBehaviour
     public void UpdateTimeLeftUntilUnlockText(string timeLeftUntilUnlock)
     {
         timeLeftUntilUnlockText.text = timeLeftUntilUnlock;
+    }
+
+    public void RemoveChest()
+    {
+        Controller = null;
+        chestButton.onClick.RemoveAllListeners();
+
+        EventService.Instance.InvokeOnChestOpened(this); // sends back to pool
+    }
+
+    public void EnableChest()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void DisableChest()
+    {
+        gameObject.SetActive(false);
     }
 }

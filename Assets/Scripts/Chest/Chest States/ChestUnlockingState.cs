@@ -6,6 +6,7 @@ using UnityEngine;
 public class ChestUnlockingState : IChestState
 {
     public EChestState ChestState => EChestState.UNLOCKING;
+    public int GemsToUnlock => Mathf.CeilToInt(timeLeftUntilUnlock / controller.TimeReductionByGemSeconds);
 
     private readonly string currentStateName = "Unlocking";
     private int timeLeftUntilUnlock;
@@ -26,7 +27,7 @@ public class ChestUnlockingState : IChestState
 
         await StartChestUnlockingTimer();
 
-        controller.UnlockChest();
+        controller.UnlockChestNow();
         AudioService.Instance.PlaySound(SoundType.StartUnlocking);
     }
 
@@ -42,7 +43,6 @@ public class ChestUnlockingState : IChestState
         StopChestUnlockingTimer();
         UIService.Instance.DisableChestPopUp();
 
-        EventService.Instance.InvokeOnGemsUsed(GetGemsToUnlock());
         AudioService.Instance.PlaySound(SoundType.Unlocked);
     }
 
@@ -88,10 +88,7 @@ public class ChestUnlockingState : IChestState
 
     private void SetupChestPopup()
     {
-        UIService.Instance.SetupAndEnableUnlockNowButton(chestPopupCenterPos, GetGemsToUnlock());
+        UIService.Instance.SetupAndEnableUnlockNowButton(chestPopupCenterPos, GemsToUnlock);
         UIService.Instance.AddButtonsListeners(controller);
     }
-
-    public int GetGemsToUnlock() =>
-        Mathf.CeilToInt(timeLeftUntilUnlock / controller.TimeReductionByGemSeconds);
 }

@@ -16,12 +16,12 @@ public class ChestService : MonoSingletonGeneric<ChestService>
 
         chestSOs.Sort((p1, p2) => p1.ChestFindingProbability.CompareTo(p2.ChestFindingProbability)); // arrange ChestSos in ascending order probability
 
-        ChestView.OnChestOpened += ReturnChestToPool;
+        EventService.OnChestOpened += ReturnChestToPool;
     }
 
     private void OnDestroy()
     {
-        ChestView.OnChestOpened -= ReturnChestToPool;
+        EventService.OnChestOpened -= ReturnChestToPool;
     }
 
     public void SpawnRandomChest()
