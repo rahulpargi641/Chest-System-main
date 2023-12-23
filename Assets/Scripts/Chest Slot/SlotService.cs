@@ -5,7 +5,7 @@ using System.Linq;
 public class SlotService : MonoSingletonGeneric<SlotService>
 {
     [SerializeField] private List<ChestSlot> slots;
-    private List<ChestView> chestQueue = new List<ChestView>();
+    private Queue<ChestView> chestQueue = new Queue<ChestView>();
 
     private void Start()
     {
@@ -14,7 +14,7 @@ public class SlotService : MonoSingletonGeneric<SlotService>
 
     private void OnDestroy()
     {
-        EventService.OnChestOpened += RemoveChestFromQueue;
+        EventService.OnChestOpened -= RemoveChestFromQueue;
     }
 
     public ChestSlot GetVacantSlot()
@@ -26,7 +26,6 @@ public class SlotService : MonoSingletonGeneric<SlotService>
             {
                 slot.IsEmpty = false;
                 vacantSlot = slot;
-
                 break;
             }
         }
@@ -35,13 +34,13 @@ public class SlotService : MonoSingletonGeneric<SlotService>
 
     public void AddChestToTheQueue(ChestView chestView)
     {
-        chestQueue.Add(chestView);
+        chestQueue.Enqueue(chestView);
     }
 
     private void RemoveChestFromQueue(ChestView chestView)
     {
         if (chestQueue.Count > 0)
-            chestQueue.Remove(chestView);
+            chestQueue = new Queue<ChestView>(chestQueue.Where(chest => chest != chestView));
         else
             Debug.Log("Chest Queue is empty");
     }
@@ -73,4 +72,3 @@ public class SlotService : MonoSingletonGeneric<SlotService>
     //    return false;
     //}
 }
-

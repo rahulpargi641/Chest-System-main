@@ -152,8 +152,8 @@ public class UIService : MonoSingletonGeneric<UIService>
     public void UpdateRewardMessageAndEnable(int receivedGems, int receivedCoins)
     {
         rewardMessage.text = "Congrats!!";
-        rewardGemText.text = $"You got {receivedGems}";
-        rewardCoinText.text = $"You got {receivedCoins}";
+        rewardGemText.text = $"You got  {receivedGems}";
+        rewardCoinText.text = $"You got  {receivedCoins}";
 
         rewardMessage.gameObject.SetActive(true);
     }
