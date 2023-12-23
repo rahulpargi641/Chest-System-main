@@ -11,7 +11,6 @@ public class ChestController
     private ChestUnlockedState chestUnlocked;
     private IChestState currentState;
 
-    private bool unlockingStarted = false;
     private ChestSlot chestSlot;
 
     private readonly ChestModel model;

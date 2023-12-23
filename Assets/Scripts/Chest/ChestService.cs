@@ -97,7 +97,6 @@ public class ChestService : MonoSingletonGeneric<ChestService>
                 randomNumber -= chestSO.ChestFindingProbability;
         }
 
-        // This is a fallback in case something goes wrong.
         return null;
     }
 }
