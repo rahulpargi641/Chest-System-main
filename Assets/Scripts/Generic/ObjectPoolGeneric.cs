@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPoolGeneric<T> where T : class
@@ -17,14 +16,17 @@ public class ObjectPoolGeneric<T> where T : class
             }
         }
 
-        T item = CreateItem();
-
-        Item<T> newItem = new Item<T>();
-        newItem.IsUsed = true;
-        newItem.ItemType = item;
-        pooledItems[item] = newItem;
+        T item = CreateAndAddNewItemToPool();
 
         return item;
+    }
+
+    private T CreateAndAddNewItemToPool()
+    {
+        T newItem = CreateItem();
+        Item<T> newItemInfo = new Item<T> { IsUsed = true, ItemType = newItem };
+        pooledItems[newItem] = newItemInfo;
+        return newItem;
     }
 
     public void ReturnItem(T itemToReturn)

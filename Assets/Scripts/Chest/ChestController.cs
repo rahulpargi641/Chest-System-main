@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class ChestController
@@ -12,6 +11,7 @@ public class ChestController
     private ChestUnlockedState chestUnlocked;
     private IChestState currentState;
 
+    private bool unlockingStarted = false;
     private ChestSlot chestSlot;
 
     private readonly ChestModel model;
@@ -122,7 +122,7 @@ public class ChestController
         int coinsMin = model.CoinsMin;
         int coinsMax = model.CoinsMax;
 
-        return UnityEngine.Random.Range(coinsMin, coinsMax + 1);
+        return Random.Range(coinsMin, coinsMax + 1);
     }
 
     public int GenerateRewardGems()
@@ -130,6 +130,6 @@ public class ChestController
         int gemsMin = model.GemsMin;
         int gemsMax = model.GemsMax;
 
-        return UnityEngine.Random.Range(gemsMin, gemsMax + 1);
+        return Random.Range(gemsMin, gemsMax + 1);
     }
 }

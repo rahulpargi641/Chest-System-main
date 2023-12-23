@@ -38,7 +38,13 @@ public class UIService : MonoSingletonGeneric<UIService>
     {
         InitializeUI();
         SetupButtonListeners();
+        SubscribeToEvents();
         PlayBackgroundMusic();
+    }
+
+    private void OnDestroy()
+    {
+        UnsubscribeFromEvents();
     }
 
     private void InitializeUI()
@@ -51,7 +57,7 @@ public class UIService : MonoSingletonGeneric<UIService>
         rewardMessage.gameObject.SetActive(false);
 
         unlockNowButtonInitialPos = unlockNowButtonRectTransform.anchoredPosition;
-        SetCurrencyStats();
+        UpdateCurrencyStats();
     }
 
     private void SetupButtonListeners()
@@ -59,6 +65,16 @@ public class UIService : MonoSingletonGeneric<UIService>
         createChestButton.onClick.AddListener(CreateChest);
         closeChestSlotsFullButton.onClick.AddListener(DisableSlotsFullPopUp);
         closeChestPopUpButton.onClick.AddListener(DisableChestPopUp);
+    }
+
+    private void SubscribeToEvents()
+    {
+        EventService.onChestSlotsFull += EnableSlotsFullPopUp;
+    }
+
+    private void UnsubscribeFromEvents()
+    {
+        EventService.onChestSlotsFull -= EnableSlotsFullPopUp;
     }
 
     private void PlayBackgroundMusic()
@@ -71,7 +87,7 @@ public class UIService : MonoSingletonGeneric<UIService>
         ChestService.Instance.SpawnRandomChest();
     }
 
-    public void SetCurrencyStats()
+    private void UpdateCurrencyStats()
     {
         gems.text = PlayerCurrencyService.Instance.GemsInAccount.ToString();
         coins.text = PlayerCurrencyService.Instance.CoinsInAccount.ToString();
@@ -98,7 +114,7 @@ public class UIService : MonoSingletonGeneric<UIService>
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 
-    public void EnableSlotsFullPopUp()
+    private void EnableSlotsFullPopUp()
     {
         rayCastBlocker.SetActive(true);
         chestSlotsFullPopUp.SetActive(true);

@@ -32,24 +32,20 @@ public class PlayerCurrencyService : MonoSingletonGeneric<PlayerCurrencyService>
     private void IncrementGems(int gemsReceived)
     {
         gemsInAccount += gemsReceived;
-        UIService.Instance.SetCurrencyStats();
     }
 
     private void DecrementGems(int gemsUsed)
     {
         gemsInAccount -= gemsUsed;
-        UIService.Instance.SetCurrencyStats();
     }
 
     private void IncrementCoins(int coinsReceived)
     {
         coinsInAccount += coinsReceived;
-        UIService.Instance.SetCurrencyStats();
     }
 
     private void DecrementCoins(int coinsUsed)
     {
         coinsInAccount -= coinsUsed;
-        UIService.Instance.SetCurrencyStats();
     }
 }

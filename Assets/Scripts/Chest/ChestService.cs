@@ -1,25 +1,44 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class ChestService : MonoSingletonGeneric<ChestService>
 {
-    [SerializeField] List<ChestSO> chestSOs;
-    [SerializeField] ChestView chestPrefab;
-    [SerializeField] Transform chestParentTransform;
+    [SerializeField] private List<ChestSO> chestSOs;
+    [SerializeField] private ChestView chestPrefab;
+    [SerializeField] private Transform chestParentTransform;
 
-    private ChestPool chestPool = new ChestPool();
+    private ChestPool chestPool;
 
     private void Start()
     {
-        chestPool.Initialize(chestPrefab);
-
-        chestSOs.Sort((p1, p2) => p1.ChestFindingProbability.CompareTo(p2.ChestFindingProbability)); // arrange ChestSos in ascending order probability
-
-        EventService.OnChestOpened += ReturnChestToPool;
+        InitializeChestPool();
+        SortChestSOsByProbability();
+        SubscribeToEvents();
     }
 
     private void OnDestroy()
+    {
+        UnsubscribeFromEvents();
+    }
+
+    private void InitializeChestPool()
+    {
+        chestPool = new ChestPool();
+        chestPool.Initialize(chestPrefab);
+    }
+
+    private void SortChestSOsByProbability()
+    {
+        chestSOs.Sort((p1, p2) => p1.ChestFindingProbability.CompareTo(p2.ChestFindingProbability));
+    }
+
+    private void SubscribeToEvents()
+    {
+        EventService.OnChestOpened += ReturnChestToPool;
+    }
+
+    private void UnsubscribeFromEvents()
     {
         EventService.OnChestOpened -= ReturnChestToPool;
     }
@@ -29,22 +48,31 @@ public class ChestService : MonoSingletonGeneric<ChestService>
         ChestSlot vacantSlot = SlotService.Instance.GetVacantSlot();
         if (vacantSlot == null)
         {
-            UIService.Instance.EnableSlotsFullPopUp();
+            EventService.Instance.InvokeOnChestSlotsFull();
             return;
         }
+        
+        SpawnRandomChest(vacantSlot);
 
-        ChestSO randomChestSO = SelectChestBasedOnFindingProbability();
+        AudioService.Instance.PlaySound(SoundType.ButtonClick);
+    }
 
+    private void SpawnRandomChest(ChestSlot vacantSlot)
+    {
+        ChestSO randomChestSO = GetRandomChestSO();
+        ChestView chestView = SpawnChest(vacantSlot, randomChestSO);
+        SlotService.Instance.AddChestToTheQueue(chestView);
+    }
+
+    private ChestView SpawnChest(ChestSlot vacantSlot, ChestSO randomChestSO)
+    {
         ChestModel chestModel = new ChestModel(randomChestSO);
         ChestView chestView = chestPool.GetChest();
         ChestController chestController = new ChestController(chestModel, chestView);
 
         chestController.SetupChest(vacantSlot, chestParentTransform);
         chestController.EnableChest();
-
-        SlotService.Instance.AddChestToTheQueue(chestView);
-
-        AudioService.Instance.PlaySound(SoundType.ButtonClick);
+        return chestView;
     }
 
     private void ReturnChestToPool(ChestView chestView)
@@ -53,7 +81,8 @@ public class ChestService : MonoSingletonGeneric<ChestService>
         chestPool.ReturnItem(chestView);
     }
 
-    private ChestSO SelectChestBasedOnFindingProbability()
+    // Selects chest according to ChestFindingProbability or rarity
+    private ChestSO GetRandomChestSO()
     {
         System.Random random = new System.Random();
 
