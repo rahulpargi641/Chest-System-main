@@ -16,8 +16,8 @@ MonoBehaviour:
   <ChestClosedImage>k__BackingField: {fileID: 21300000, guid: 6aca51dafb863ca40bfee2f3ae630511, type: 3}
   <ChestOpenImage>k__BackingField: {fileID: 21300000, guid: 33ac620e1d1161d44b13366fd25c78be, type: 3}
   <ChestFindingProbability>k__BackingField: 50
-  <UnlockDurationMinutes>k__BackingField: 1
-  <TimeReductionByGemSeconds>k__BackingField: 20
+  <UnlockDurationMinutes>k__BackingField: 10
+  <TimeReductionByGemSeconds>k__BackingField: 120
   <CoinsMin>k__BackingField: 15
   <CoinsMax>k__BackingField: 30
   <GemsMin>k__BackingField: 10
