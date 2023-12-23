@@ -33,8 +33,7 @@ public class ChestUnlockingState : IChestState
 
     public void OnChestClicked()
     {
-        SetupChestPopup();
-        UIService.Instance.EnableChestPopUp();
+        DisplayChestPopup();
         AudioService.Instance.PlaySound(SoundType.ChestClickedOn);
     }
 
@@ -42,7 +41,6 @@ public class ChestUnlockingState : IChestState
     {
         StopChestUnlockingTimer();
         UIService.Instance.DisableChestPopUp();
-
         AudioService.Instance.PlaySound(SoundType.Unlocked);
     }
 
@@ -84,6 +82,12 @@ public class ChestUnlockingState : IChestState
     private void StopChestUnlockingTimer()
     {
         cancellationTokenSource?.Cancel();
+    }
+
+    private void DisplayChestPopup()
+    {
+        SetupChestPopup();
+        UIService.Instance.EnableChestPopUp();
     }
 
     private void SetupChestPopup()

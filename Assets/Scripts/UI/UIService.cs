@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,17 +19,18 @@ public class UIService : MonoSingletonGeneric<UIService>
     [SerializeField] private GameObject chestSlotsFullPopUp;
 
     [Header("Unlock Now Text")]
-    [SerializeField] private RectTransform unlockNowButtonRectTransform;
     [SerializeField] private TextMeshProUGUI unlockNowText;
+    [SerializeField] private RectTransform unlockNowButtonRectTransform;
+
+    [Header("Currency Texts")]
+    [SerializeField] private TextMeshProUGUI coins;
+    [SerializeField] private TextMeshProUGUI gems;
 
     [Header("Reward Texts")]
     [SerializeField] private TextMeshProUGUI rewardMessage;
     [SerializeField] private TextMeshProUGUI rewardCoinText;
     [SerializeField] private TextMeshProUGUI rewardGemText;
 
-    [Header("Currency Texts")]
-    [SerializeField] private TextMeshProUGUI coins;
-    [SerializeField] private TextMeshProUGUI gems;
 
     private Vector2 unlockNowButtonInitialPos;
 
@@ -111,14 +111,15 @@ public class UIService : MonoSingletonGeneric<UIService>
         AudioService.Instance.PlaySound(SoundType.ButtonClose);
     }
 
-    public void SetupAndEnableUnlockNowButton(int gemsToUnlock) // called when chest is in Locked state
+    // called when chest is in Locked state, UnlockNow button will be at the original position
+    public void SetupAndEnableUnlockNowButton(int gemsToUnlock) 
     {
         SetupUnlockNowButton(unlockNowButtonInitialPos, gemsToUnlock);
         unlockNowButton.gameObject.SetActive(true);
     }
 
-    // brings the Unlock Now button to centre of the chest popup
-    public void SetupAndEnableUnlockNowButton(Vector2 chestPopupCenterPos, int gemsToUnlock) // called when chest is in Unlocking state, UnlockNow button will be in the center of chest popup
+    // called when chest is in Unlocking state, UnlockNow button will be at the center of chest popup
+    public void SetupAndEnableUnlockNowButton(Vector2 chestPopupCenterPos, int gemsToUnlock) 
     {
         SetupUnlockNowButton(chestPopupCenterPos, gemsToUnlock);
         unlockNowButton.gameObject.SetActive(true);

@@ -26,8 +26,7 @@ public class ChestLockedState : IChestState
 
     public void OnChestClicked()
     {
-        SetupChestPopup();
-        UIService.Instance.EnableChestPopUp();
+        DisplayChestPopup();
         AudioService.Instance.PlaySound(SoundType.ChestClickedOn);
     }
 
@@ -51,6 +50,12 @@ public class ChestLockedState : IChestState
         controller.UpdateTimeLeftUntilUnlockText(chestUnlockDuration); // Displays time it will take to unlock the chest
     }
 
+    private void DisplayChestPopup()
+    {
+        SetupChestPopup();
+        UIService.Instance.EnableChestPopUp();
+    }
+
     private void SetupChestPopup()
     {
         UIService.Instance.SetupAndEnableUnlockNowButton(gemsToUnlock);
@@ -58,7 +63,8 @@ public class ChestLockedState : IChestState
         UIService.Instance.AddButtonsListeners(controller);
     }
 
-    private void EnableStartUnlockingButtonIf() // Start Unlocking button is enabled only if no other chests are currently unlocking
+    // Start Unlocking button is enabled only if no other chests are currently unlocking
+    private void EnableStartUnlockingButtonIf() 
     {
         if (SlotService.Instance.IsAnyChestUnlocking() == false)
             UIService.Instance.EnableStartUnlockingButton();

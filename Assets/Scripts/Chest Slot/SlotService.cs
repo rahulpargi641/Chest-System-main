@@ -67,7 +67,7 @@ public class SlotService : MonoSingletonGeneric<SlotService>
     //{
     //    for (int i = 0; i < slots.Count; i++)
     //    {
-    //        if (slots[i].ChestController != null && slots[i].ChestController.ChestState == EChestState.UNLOCKING)
+    //        if (slots[i].ChestState == EChestState.UNLOCKING)
     //            return true;
     //    }
     //    return false;

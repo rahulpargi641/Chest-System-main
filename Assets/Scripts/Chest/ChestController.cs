@@ -81,7 +81,7 @@ public class ChestController
 
     public void RemoveChestFromSlot()
     {
-        if (view != null)
+        if (view)
         {
             chestSlot.IsEmpty = true;
             view.RemoveChest();
@@ -117,7 +117,7 @@ public class ChestController
         view.UpdateTimeLeftUntilUnlockText(timeLeftUntilUnlock);
     }
 
-    public int GenerateRewardCoins() // Based on chest type
+    public int GenerateRewardCoins() 
     {
         int coinsMin = model.CoinsMin;
         int coinsMax = model.CoinsMax;
@@ -125,7 +125,7 @@ public class ChestController
         return UnityEngine.Random.Range(coinsMin, coinsMax + 1);
     }
 
-    public int GenerateRewardGems() // Based on chest type
+    public int GenerateRewardGems()
     {
         int gemsMin = model.GemsMin;
         int gemsMax = model.GemsMax;

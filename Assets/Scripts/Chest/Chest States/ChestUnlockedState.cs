@@ -1,9 +1,8 @@
-using UnityEngine;
 
 public class ChestUnlockedState : IChestState
 {
     public EChestState ChestState => EChestState.UNLOCKED;
-    public int GemsToUnlock => 0;
+    public int GemsToUnlock => 0; 
 
     private int rewardCoins;
     private int rewardGems;
@@ -25,10 +24,9 @@ public class ChestUnlockedState : IChestState
 
     public void OnChestClicked()
     {
-        EventService.onRewardCollected += RemoveChestFromSlot; // When reward message Popup gets closed, this event will be invoked
-
-        SetupChestPopup();
-        UIService.Instance.EnableChestPopUp();
+        EventService.onRewardCollected += RemoveChestFromSlot; // When reward message ChestPopup gets closed, this event will be invoked
+        
+        DisplayChestPopup();
 
         EventService.Instance.InvokeOnChestUnlocked(rewardGems, rewardCoins);
         AudioService.Instance.PlaySound(SoundType.RewardsReceived);
@@ -47,10 +45,16 @@ public class ChestUnlockedState : IChestState
         UpdateChestInfoTexts();
     }
 
-    private void UpdateChestInfoTexts() // Updates Current Chest State and Time remaining until unlock text 
+    private void UpdateChestInfoTexts() 
     {
         controller.UpdateCurrentStateText(currentStateName);
         controller.UpdateTimeLeftUntilUnlockText(timeLeftUntilUnlock);
+    }
+
+    private void DisplayChestPopup()
+    {
+        SetupChestPopup();
+        UIService.Instance.EnableChestPopUp();
     }
 
     private void SetupChestPopup()
