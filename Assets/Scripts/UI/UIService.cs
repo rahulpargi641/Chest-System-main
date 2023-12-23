@@ -70,11 +70,17 @@ public class UIService : MonoSingletonGeneric<UIService>
     private void SubscribeToEvents()
     {
         EventService.onChestSlotsFull += EnableSlotsFullPopUp;
+
+        EventService.onGemsUsed += UpdateGemsStats;
+        EventService.onRewardCollected += UpdateCurrencyStats;
     }
 
     private void UnsubscribeFromEvents()
     {
         EventService.onChestSlotsFull -= EnableSlotsFullPopUp;
+
+        EventService.onGemsUsed -= UpdateGemsStats;
+        EventService.onRewardCollected -= UpdateCurrencyStats;
     }
 
     private void PlayBackgroundMusic()
@@ -91,6 +97,22 @@ public class UIService : MonoSingletonGeneric<UIService>
     {
         gems.text = PlayerCurrencyService.Instance.GemsInAccount.ToString();
         coins.text = PlayerCurrencyService.Instance.CoinsInAccount.ToString();
+    }
+
+    private void UpdateCurrencyStats(int gems, int coins)
+    {
+        UpdateGemsStats(gems);
+        UpdateCoinsStats(coins);
+    }
+
+    private void UpdateGemsStats(int gems)
+    {
+        this.gems.text = gems.ToString();
+    }
+
+    private void UpdateCoinsStats(int coins)
+    {
+        this.coins.text = coins.ToString();
     }
 
     public void EnableChestPopUp()
