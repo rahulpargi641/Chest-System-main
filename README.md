@@ -75,7 +75,7 @@
 
 ### Gameplay Demonstration
     For a visual demonstration of the gameplay, watch video on YouTube:
-   [Youtube video link](https://youtu.be/dWuikYUTAqs)
+   [Youtube video link](https://youtu.be/LePLThE2DcY)
 
 ### Play the Game
     To experience the game firsthand, play it directly by following this playable link:
