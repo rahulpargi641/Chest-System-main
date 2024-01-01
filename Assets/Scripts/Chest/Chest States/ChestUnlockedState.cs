@@ -4,12 +4,12 @@ public class ChestUnlockedState : IChestState
     public EChestState ChestState => EChestState.UNLOCKED;
     public int GemsToUnlock => 0; 
 
+    private const string currentStateName = "Unlocked";
+    private const string timeLeftUntilUnlock = "Open"; // chest is opened in the unlocked state
     private int rewardCoins;
     private int rewardGems;
-    private readonly string currentStateName = "Unlocked";
-    private readonly string timeLeftUntilUnlock = "Open"; // chest is opened in the unlocked state
 
-    private ChestController controller;
+    private readonly ChestController controller;
 
     public ChestUnlockedState(ChestController controller)
     {
@@ -24,7 +24,7 @@ public class ChestUnlockedState : IChestState
 
     public void OnChestClicked()
     {
-        EventService.onRewardCollected += RemoveChestFromSlot; // When reward message ChestPopup gets closed, this event will be invoked
+        EventService.Instance.OnRewardCollected += RemoveChestFromSlot; // When reward message ChestPopup gets closed, this event will be invoked
         
         DisplayChestPopup();
 
@@ -34,7 +34,7 @@ public class ChestUnlockedState : IChestState
 
     public void OnExit()
     {
-        EventService.onRewardCollected -= RemoveChestFromSlot;
+        EventService.Instance.OnRewardCollected -= RemoveChestFromSlot;
 
         UIService.Instance.DisableChestPopUp();
     }

@@ -17,13 +17,13 @@ public class Sound
 
     private AudioSource audioSource;
 
-    public void Initialize(AudioSource source)
+    public void Initialize(AudioSource audioSource)
     {
-        this.audioSource = source;
-        source.clip = clip;
-        source.volume = volume;
-        source.pitch = pitch;
-        source.loop = loop;
+        this.audioSource = audioSource;
+        audioSource.clip = clip;
+        audioSource.volume = volume;
+        audioSource.pitch = pitch;
+        audioSource.loop = loop;
     }
 
     public void Play()

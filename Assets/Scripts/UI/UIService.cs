@@ -31,7 +31,6 @@ public class UIService : MonoSingletonGeneric<UIService>
     [SerializeField] private TextMeshProUGUI rewardCoinText;
     [SerializeField] private TextMeshProUGUI rewardGemText;
 
-
     private Vector2 unlockNowButtonInitialPos;
 
     private void Start()
@@ -39,7 +38,6 @@ public class UIService : MonoSingletonGeneric<UIService>
         InitializeUI();
         SetupButtonListeners();
         SubscribeToEvents();
-        PlayBackgroundMusic();
     }
 
     private void OnDestroy()
@@ -69,23 +67,18 @@ public class UIService : MonoSingletonGeneric<UIService>
 
     private void SubscribeToEvents()
     {
-        EventService.onChestSlotsFull += EnableSlotsFullPopUp;
+        EventService.Instance.OnChestSlotsFull += EnableSlotsFullPopUp;
 
-        EventService.onGemsUsed += UpdateGemsStats;
-        EventService.onRewardCollected += UpdateCurrencyStats;
+        EventService.Instance.OnGemsUsed += UpdateGemsStats;
+        EventService.Instance.OnRewardCollected += UpdateCurrencyStats;
     }
 
     private void UnsubscribeFromEvents()
     {
-        EventService.onChestSlotsFull -= EnableSlotsFullPopUp;
+        EventService.Instance.OnChestSlotsFull -= EnableSlotsFullPopUp;
 
-        EventService.onGemsUsed -= UpdateGemsStats;
-        EventService.onRewardCollected -= UpdateCurrencyStats;
-    }
-
-    private void PlayBackgroundMusic()
-    {
-        AudioService.Instance.PlaySound(SoundType.BgMusic);
+        EventService.Instance.OnGemsUsed -= UpdateGemsStats;
+        EventService.Instance.OnRewardCollected -= UpdateCurrencyStats;
     }
 
     private void CreateChest()

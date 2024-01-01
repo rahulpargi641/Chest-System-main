@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class ChestPool : ObjectPoolGeneric<ChestView>
 {
-    private ChestView view;
+    private ChestView chestPrefab;
 
-    public void Initialize(ChestView view)
+    public void Initialize(ChestView chestPrefab)
     {
-        this.view = view;
+        this.chestPrefab = chestPrefab;
     }
 
     public ChestView GetChest()
@@ -16,7 +16,7 @@ public class ChestPool : ObjectPoolGeneric<ChestView>
 
     protected override ChestView CreateItem() 
     { 
-        return Object.Instantiate(view); 
+        return Object.Instantiate(chestPrefab); 
     }
 }
 

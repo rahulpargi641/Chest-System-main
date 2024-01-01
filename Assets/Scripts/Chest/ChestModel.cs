@@ -12,18 +12,18 @@ public class ChestModel
     public int GemsMin { get; private set; }
     public int GemsMax { get; private set; }
 
-    public ChestModel(ChestSO chestSO)
+    public ChestModel(ChestConfig chestConfig)
     {
-        ChestClosedImage = chestSO.ChestClosedImage;
-        ChestOpenImage = chestSO.ChestOpenImage;
+        ChestClosedImage = chestConfig.ChestClosedImage;
+        ChestOpenImage = chestConfig.ChestOpenImage;
 
-        ChestFindingProbability = chestSO.ChestFindingProbability;
-        UnlockDurationMinutes = chestSO.UnlockDurationMinutes;
-        TimeReductionByGemSeconds = chestSO.TimeReductionByGemSeconds;
+        ChestFindingProbability = chestConfig.ChestFindingProbability;
+        UnlockDurationMinutes = chestConfig.UnlockDurationMinutes;
+        TimeReductionByGemSeconds = chestConfig.TimeReductionByGemSeconds;
 
-        CoinsMin = chestSO.CoinsMin;
-        CoinsMax = chestSO.CoinsMax;
-        GemsMin = chestSO.GemsMin;
-        GemsMax = chestSO.GemsMax;
+        CoinsMin = chestConfig.CoinsMin;
+        CoinsMax = chestConfig.CoinsMax;
+        GemsMin = chestConfig.GemsMin;
+        GemsMax = chestConfig.GemsMax;
     }
 }

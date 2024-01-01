@@ -2,15 +2,15 @@ using System;
 
 public class EventService : MonoSingletonGeneric<EventService>
 {
-    public static event Action<int, int> onChestUnlocked;
-    public static event Action<ChestView> OnChestOpened;
-    public static event Action onChestSlotsFull;
-    public static event Action onRewardCollected;
-    public static event Action<int> onGemsUsed;
+    public event Action<int, int> OnChestUnlocked; 
+    public event Action<ChestView> OnChestOpened;
+    public event Action OnChestSlotsFull;
+    public event Action OnRewardCollected;
+    public event Action<int> OnGemsUsed;
 
     public void InvokeOnChestUnlocked(int gemsReceived, int coinsReceived)
     {
-        onChestUnlocked?.Invoke(gemsReceived, coinsReceived);
+        OnChestUnlocked?.Invoke(gemsReceived, coinsReceived);
     }
 
     public void InvokeOnChestOpened(ChestView chestToRemove)
@@ -20,16 +20,16 @@ public class EventService : MonoSingletonGeneric<EventService>
 
     public void InvokeOnChestSlotsFull()
     {
-        onChestSlotsFull?.Invoke();
+        OnChestSlotsFull?.Invoke();
     }
 
     public void InvokeOnRewardCollected()
     {
-        onRewardCollected?.Invoke();
+        OnRewardCollected?.Invoke();
     }
 
     public void InvokeOnGemsUsed(int gemsUsed)
     {
-        onGemsUsed?.Invoke(gemsUsed);
+        OnGemsUsed?.Invoke(gemsUsed);
     }
 }

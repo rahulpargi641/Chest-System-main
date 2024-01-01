@@ -44,7 +44,6 @@ public class ObjectPoolGeneric<T> where T : class
 
     protected virtual T CreateItem()
     {
-        // You can create a new item of the enum type here
         return default(T);
     }
 

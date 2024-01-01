@@ -121,7 +121,7 @@ public class ChestController
         int coinsMin = model.CoinsMin;
         int coinsMax = model.CoinsMax;
 
-        return Random.Range(coinsMin, coinsMax + 1);
+        return Random.Range(coinsMin, coinsMax + 1); // max value is exclusive that's why adding 1. to ensure that coinMax is included in the possible values, no need to make it constant.
     }
 
     public int GenerateRewardGems()

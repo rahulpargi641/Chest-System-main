@@ -13,14 +13,14 @@ public class PlayerCurrencyService : MonoSingletonGeneric<PlayerCurrencyService>
         gemsInAccount = 20;
         coinsInAccount = 100;
 
-        EventService.onChestUnlocked += UpdateCurrencies;
-        EventService.onGemsUsed += DecrementGems;
+        EventService.OnChestUnlocked += UpdateCurrencies;
+        EventService.OnGemsUsed += DecrementGems;
     }
 
     private void OnDestroy()
     {
-        EventService.onChestUnlocked -= UpdateCurrencies;
-        EventService.onGemsUsed -= DecrementGems;
+        EventService.OnChestUnlocked -= UpdateCurrencies;
+        EventService.OnGemsUsed -= DecrementGems;
     }
 
     public void UpdateCurrencies(int gemsReceived, int coinsReceived)

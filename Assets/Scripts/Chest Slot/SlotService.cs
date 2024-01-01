@@ -9,12 +9,12 @@ public class SlotService : MonoSingletonGeneric<SlotService>
 
     private void Start()
     {
-        EventService.OnChestOpened += RemoveChestFromQueue;
+        EventService.Instance.OnChestOpened += RemoveChestFromQueue;
     }
 
     private void OnDestroy()
     {
-        EventService.OnChestOpened -= RemoveChestFromQueue;
+        EventService.Instance.OnChestOpened -= RemoveChestFromQueue;
     }
 
     public ChestSlot GetVacantSlot()

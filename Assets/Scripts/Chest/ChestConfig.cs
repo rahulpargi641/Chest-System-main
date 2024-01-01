@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Chest", menuName = "SriptableObjects/NewChest")]
-public class ChestSO : ScriptableObject
+public class ChestConfig : ScriptableObject // contains configuration and data
 {
     [field:SerializeField] public ChestType ChestType { get; private set; }
     [field:SerializeField] public Sprite ChestClosedImage { get; private set; }

@@ -8,9 +8,10 @@ public class ChestUnlockingState : IChestState
     public EChestState ChestState => EChestState.UNLOCKING;
     public int GemsToUnlock => Mathf.CeilToInt(timeLeftUntilUnlock / controller.TimeReductionByGemSeconds);
 
-    private readonly string currentStateName = "Unlocking";
-    private int timeLeftUntilUnlock;
+    private const string currentStateName = "Unlocking";
+    private const int minutesPerHour = 60;
     private readonly Vector2 chestPopupCenterPos = new Vector2(0, 0);
+    private int timeLeftUntilUnlock;
     private CancellationTokenSource cancellationTokenSource;
 
     private readonly ChestController controller;
@@ -18,7 +19,7 @@ public class ChestUnlockingState : IChestState
     public ChestUnlockingState(ChestController controller)
     {
         this.controller = controller;
-        timeLeftUntilUnlock = controller.UnlockDurationMinutes * 60;
+        timeLeftUntilUnlock = controller.UnlockDurationMinutes * minutesPerHour;
     }
 
     public async void OnEnter()

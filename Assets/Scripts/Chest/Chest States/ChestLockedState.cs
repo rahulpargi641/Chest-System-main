@@ -5,18 +5,19 @@ public class ChestLockedState : IChestState
     public EChestState ChestState => EChestState.LOCKED;
     public int GemsToUnlock => gemsToUnlock;
 
-    private readonly string currentStateName = "Locked";
+    private const string currentStateName = "Locked";
+    private const int minutesPerHour = 60;
     private readonly int unlockDurationMinutes; 
     private readonly int gemsToUnlock;
 
-    private ChestController controller;
+    private readonly ChestController controller;
 
     public ChestLockedState(ChestController controller)
     {
         this.controller = controller;
 
         unlockDurationMinutes = controller.UnlockDurationMinutes;
-        gemsToUnlock = Mathf.CeilToInt(unlockDurationMinutes * 60 / controller.TimeReductionByGemSeconds);
+        gemsToUnlock = Mathf.CeilToInt(unlockDurationMinutes * minutesPerHour / controller.TimeReductionByGemSeconds);
     }
 
     public void OnEnter()
@@ -45,8 +46,8 @@ public class ChestLockedState : IChestState
     {
         controller.UpdateCurrentStateText(currentStateName);
 
-        string chestUnlockDuration = (unlockDurationMinutes < 60) ? unlockDurationMinutes.ToString() + " Min" 
-                                                                  : (unlockDurationMinutes / 60).ToString() + " Hr";
+        string chestUnlockDuration = (unlockDurationMinutes < minutesPerHour) ? unlockDurationMinutes.ToString() + " Min" 
+                                                                  : (unlockDurationMinutes / minutesPerHour).ToString() + " Hr";
         controller.UpdateTimeLeftUntilUnlockText(chestUnlockDuration); // Displays time it will take to unlock the chest
     }
 
