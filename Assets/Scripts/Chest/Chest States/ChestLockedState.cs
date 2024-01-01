@@ -47,7 +47,7 @@ public class ChestLockedState : IChestState
         controller.UpdateCurrentStateText(currentStateName);
 
         string chestUnlockDuration = (unlockDurationMinutes < minutesPerHour) ? unlockDurationMinutes.ToString() + " Min" 
-                                                                  : (unlockDurationMinutes / minutesPerHour).ToString() + " Hr";
+                                                                              : (unlockDurationMinutes / minutesPerHour).ToString() + " Hr";
         controller.UpdateTimeLeftUntilUnlockText(chestUnlockDuration); // Displays time it will take to unlock the chest
     }
 
