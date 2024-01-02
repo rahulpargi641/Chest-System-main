@@ -10,6 +10,7 @@ public class ChestUnlockingState : IChestState
 
     private const string currentStateName = "Unlocking";
     private const int secondsPerMinute = 60;
+    private const int timerTaskDelay = 1000;
     private readonly Vector2 chestPopupCenterPos = new Vector2(0, 0);
     private int timeLeftUntilUnlock; // in seconds
     private CancellationTokenSource cancellationTokenSource;
@@ -67,7 +68,7 @@ public class ChestUnlockingState : IChestState
 
             UpdateTimerText();
 
-            await Task.Delay(1000, cancellationToken);
+            await Task.Delay(timerTaskDelay, cancellationToken);
             timeLeftUntilUnlock--;
         }
     }
